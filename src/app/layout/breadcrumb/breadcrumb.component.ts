@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrl: './breadcrumb.component.scss'
+  styles: ''
 })
 export class BreadcrumbComponent {
   private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]);
