@@ -4,7 +4,7 @@ import { LayoutService } from '../../services/layout/layout.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styles: ''
 })
 export class SidebarComponent implements OnDestroy {
   timeout: any = null;
