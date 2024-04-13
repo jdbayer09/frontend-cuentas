@@ -11,7 +11,7 @@ import { MenuService } from '../../services/layout/menu.service';
 @Component({
   selector: '[app-menuitem]',
   templateUrl: './menu-item.component.html',
-  styleUrl: './menu-item.component.scss',
+  styles: '',
   animations: [
     trigger('children', [
         state('collapsed', style({
