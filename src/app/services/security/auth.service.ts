@@ -48,10 +48,6 @@ export class AuthService {
 
 
   private checkAuthStatus(): void {
-
-    console.log("object");
-
-
     const token = this.storage.get<string>(StorageKeys.USER_INFO_TOKEN);
 
     if ( !token ) {
@@ -63,13 +59,13 @@ export class AuthService {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${ token }`);
-
       this.http.get<CheckTokenResponse>(url, { headers })
         .pipe(
           map( ({ user, token, expirationToken}) => this.setAuthentication( user, token, expirationToken )),
-          catchError(() => {
+          catchError((err) => {
             this._authStatus.set( AuthStatus.notAuthenticated );
-            return of(false);
+            this.logout();
+            return of(err);
           })
         ).subscribe();
     }
