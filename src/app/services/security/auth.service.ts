@@ -32,7 +32,7 @@ export class AuthService {
     return this.http.post<LoginResponse>( url, body )
       .pipe(
         map( ({ user, token, expirationToken }) => this.setAuthentication( user, token, expirationToken )),
-        catchError( err => throwError( () => err.error.message ))
+        catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
 
