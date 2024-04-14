@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://localhost:8080/itex/api/',
-  webSocket_url: 'ws://localhost:8080/itex/api/websocket',
-  encrypt_data_key: 'clave para encriptar los datos del local storage'
+  api_url: 'http://localhost:8081/cuentas/api/'
 };
 
 /*
