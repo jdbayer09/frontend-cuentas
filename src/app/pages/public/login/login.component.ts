@@ -2,6 +2,7 @@ import { Component, Signal, WritableSignal, computed, inject, signal } from '@an
 import { AuthService } from '../../../services/security/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,9 @@ export class LoginComponent {
 
   private _error: WritableSignal<string | null> = signal(null);
   error: Signal<string | null> = computed(() => this._error());
+
+  tittle = environment.public.tittle;
+  info = environment.public.info
 
   loginForm: FormGroup = this.formBuilder.group({
     email:    [
@@ -54,5 +58,13 @@ export class LoginComponent {
         }, 500);
       }
     });
+  }
+
+  navRegister() {
+    this.router.navigateByUrl('/p/register');
+  }
+
+  navForgotPass() {
+    this.router.navigateByUrl('/p/forgot-pass');
   }
 }
