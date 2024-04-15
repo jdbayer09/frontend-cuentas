@@ -1,6 +1,6 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { AuthService } from './services/security/auth.service';
-import { Router } from '@angular/router';
+import { AuthStatus } from './enums';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +19,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  private authService = inject( AuthService );
-  private router = inject( Router );
-
+  private authSV = inject( AuthService );
 
   finishedAuthCheck:Signal<boolean> = computed<boolean>(() => {
+    if ( this.authSV.authStatus() === AuthStatus.checking ) {
+      return false;
+    }
     return true;
   });
-
 }

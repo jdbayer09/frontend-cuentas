@@ -9,9 +9,9 @@ export class StorageService {
   constructor() { }
 
 
-  get<T>(key: StorageKeys): T {
+  get<T>(key: StorageKeys): T | null {
     const data = localStorage.getItem(key.toString());
-    if (!data) throw new Error("No existe datos");
+    if (!data) return null;
     return JSON.parse(data);
   }
 
