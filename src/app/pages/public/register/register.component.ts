@@ -2,6 +2,7 @@ import { Component, Signal, WritableSignal, computed, inject, signal } from '@an
 import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegisterUserRequest } from '../../../interfaces/user/registerUserRequest.interface';
 
 @Component({
   selector: 'app-register',
@@ -69,8 +70,7 @@ export class RegisterComponent {
     this._error.set(null);
     this._loading.set(true);
     this.registerForm.disable();
-    const data: RegisterRequest = this.registerForm.value;
-
+    const data: RegisterUserRequest = this.registerForm.value;
     if (data.password === data.confirmPassword) {
       //TODO: Configuracion de servicio de registro.
     } else {
@@ -82,10 +82,4 @@ export class RegisterComponent {
     }
   }
 }
-export interface RegisterRequest {
-  name:            string;
-  lastName:        string;
-  email:           string;
-  password:        string;
-  confirmPassword: string;
-}
+

@@ -4,6 +4,10 @@ import { StorageService } from '../util/storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { LoginRequest } from '../../interfaces/user/loginRequest.interface';
+import { UserBaseData } from '../../interfaces/user/userBaseData.interface';
+import { CheckTokenResponse } from '../../interfaces/user/checkTokenResponse.interface';
+import { LoginResponse } from '../../interfaces/user/loginResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,17 +29,14 @@ export class AuthService {
     this.checkAuthStatus();
   }
 
-
-  login( email: string, password: string ): Observable<boolean> {
+  login( loginRequest: LoginRequest ): Observable<boolean> {
     const url  = `${ this.baseUrl }/login`;
-    const body = { email, password };
-    return this.http.post<LoginResponse>( url, body )
+    return this.http.post<LoginResponse>( url, loginRequest )
       .pipe(
         map( ({ user, token, expirationToken }) => this.setAuthentication( user, token, expirationToken )),
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
-
 
   logout() {
     this.storage.remove(StorageKeys.USER_INFO_TOKEN);
@@ -45,7 +46,6 @@ export class AuthService {
     this._currentUser.set(null);
     this._authStatus.set( AuthStatus.notAuthenticated );
   }
-
 
   private checkAuthStatus(): void {
     const token = this.storage.get<string>(StorageKeys.USER_INFO_TOKEN);
@@ -74,29 +74,9 @@ export class AuthService {
   private setAuthentication(user: UserBaseData, token:string, expirationToken: string): boolean {
     this._currentUser.set( user );
     this._authStatus.set( AuthStatus.authenticated );
-
     this.storage.set(StorageKeys.USER_INFO_TOKEN, token);
     this.storage.set(StorageKeys.USER_INFO, user);
     this.storage.set(StorageKeys.USER_INFO_EXPIRATION_TOKEN, expirationToken);
-
     return true;
   }
-}
-
-export interface UserBaseData {
-  id: number;
-  fullName: string;
-  email: string;
-}
-
-export interface CheckTokenResponse {
-  user:  UserBaseData;
-  token: string;
-  expirationToken: string;
-}
-
-export interface LoginResponse {
-  user:  UserBaseData;
-  token: string;
-  expirationToken: string;
 }

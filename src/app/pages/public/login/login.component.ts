@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/security/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
+import { LoginRequest } from '../../../interfaces/user/loginRequest.interface';
 
 @Component({
   selector: 'app-login',
@@ -43,9 +44,9 @@ export class LoginComponent {
   login() {
     this._error.set(null);
     this._loading.set(true);
-    const { email, password } = this.loginForm.value;
     this.loginForm.disable();
-    this.authSV.login(email, password).subscribe({
+    const data: LoginRequest = this.loginForm.value;
+    this.authSV.login(data).subscribe({
       next: () => {
         setTimeout(() => {
           this._loading.set(false);
