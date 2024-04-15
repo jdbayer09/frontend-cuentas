@@ -44,6 +44,7 @@ export class LoginComponent {
     this._error.set(null);
     this._loading.set(true);
     const { email, password } = this.loginForm.value;
+    this.loginForm.disable();
     this.authSV.login(email, password).subscribe({
       next: () => {
         setTimeout(() => {
@@ -56,6 +57,9 @@ export class LoginComponent {
           this._error.set(err);
           this._loading.set(false);
         }, 500);
+      },
+      complete: () => {
+        this.loginForm.enable();
       }
     });
   }

@@ -12,8 +12,8 @@
                   </a>
                 </p>
             </div>
-            <input pInputText placeholder="Correo Electrónico" class="w-20rem" formControlName="email"/>
-            <p-password placeholder="Contraseña" [feedback]="true" inputStyleClass="w-20rem" formControlName="password"></p-password>
+            <input pInputText placeholder="Correo Electrónico" class="w-20rem" formControlName="email" type="email"/>
+            <p-password placeholder="Contraseña" inputStyleClass="w-20rem" formControlName="password" [feedback]="false"></p-password>
             @if(!loading()) {
               <button pButton label="Iniciar Sesión" type="submit" class="w-20rem" [disabled]="loginForm.invalid"></button>
             }
