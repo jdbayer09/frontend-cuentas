@@ -1,6 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { LayoutService } from '../../services/layout/layout.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { StorageService } from '../../services/util/storage.service';
+import { UserBaseData } from '../../interfaces/user';
+import { StorageKeys } from '../../enums';
 
 @Component({
   selector: 'app-topbar',
@@ -9,13 +12,19 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class TopbarComponent {
   @ViewChild('menubutton') menuButton!: ElementRef;
-
   @ViewChild(SidebarComponent) appSidebar!: SidebarComponent;
 
-  constructor(public layoutService: LayoutService, public el: ElementRef) {}
+  private storageSV = inject(StorageService);
+
+  private _userData: WritableSignal<UserBaseData | null> = signal(null);
+  userData: Signal<UserBaseData | null> = computed(() => this._userData());
+
+  constructor(public layoutService: LayoutService, public el: ElementRef) {
+    this._userData.set(this.storageSV.get<UserBaseData>(StorageKeys.USER_INFO))
+  }
 
   onMenuButtonClick() {
-      this.layoutService.onMenuToggle();
+    this.layoutService.onMenuToggle();
   }
 
   get logo() {

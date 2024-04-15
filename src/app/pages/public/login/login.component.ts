@@ -3,7 +3,7 @@ import { AuthService } from '../../../services/security/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
-import { LoginRequest } from '../../../interfaces/user/loginRequest.interface';
+import { LoginRequest } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-login',

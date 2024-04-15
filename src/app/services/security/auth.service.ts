@@ -4,10 +4,7 @@ import { StorageService } from '../util/storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { LoginRequest } from '../../interfaces/user/loginRequest.interface';
-import { UserBaseData } from '../../interfaces/user/userBaseData.interface';
-import { CheckTokenResponse } from '../../interfaces/user/checkTokenResponse.interface';
-import { LoginResponse } from '../../interfaces/user/loginResponse.interface';
+import { CheckTokenResponse, LoginRequest, LoginResponse, UserBaseData } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +28,7 @@ export class AuthService {
 
   login( loginRequest: LoginRequest ): Observable<boolean> {
     const url  = `${ this.baseUrl }/login`;
+    loginRequest.email = loginRequest.email.toLocaleLowerCase();
     return this.http.post<LoginResponse>( url, loginRequest )
       .pipe(
         map( ({ user, token, expirationToken }) => this.setAuthentication( user, token, expirationToken )),

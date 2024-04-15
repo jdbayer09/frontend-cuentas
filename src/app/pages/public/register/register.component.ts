@@ -2,7 +2,7 @@ import { Component, Signal, WritableSignal, computed, inject, signal } from '@an
 import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterUserRequest } from '../../../interfaces/user/registerUserRequest.interface';
+import { RegisterUserRequest } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-register',
