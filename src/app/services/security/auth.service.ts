@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { CheckTokenResponse, LoginRequest, LoginResponse, UserBaseData } from '../../interfaces/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthService {
 
   private storage = inject(StorageService);
   private http = inject( HttpClient );
+  private router = inject(Router);
 
   private _currentUser: WritableSignal<UserBaseData | null> = signal<UserBaseData | null>(null);
   private _authStatus: WritableSignal<AuthStatus>           = signal<AuthStatus>( AuthStatus.checking );
@@ -43,6 +45,7 @@ export class AuthService {
 
     this._currentUser.set(null);
     this._authStatus.set( AuthStatus.notAuthenticated );
+    this.router.navigateByUrl('/p/login', {replaceUrl: true});
   }
 
   private checkAuthStatus(): void {

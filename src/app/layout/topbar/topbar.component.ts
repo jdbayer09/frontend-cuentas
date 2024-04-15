@@ -4,6 +4,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { StorageService } from '../../services/util/storage.service';
 import { UserBaseData } from '../../interfaces/user';
 import { StorageKeys } from '../../enums';
+import { AuthService } from '../../services/security/auth.service';
 
 @Component({
   selector: 'app-topbar',
@@ -15,6 +16,7 @@ export class TopbarComponent {
   @ViewChild(SidebarComponent) appSidebar!: SidebarComponent;
 
   private storageSV = inject(StorageService);
+  private authSV = inject(AuthService);
 
   private _userData: WritableSignal<UserBaseData | null> = signal(null);
   userData: Signal<UserBaseData | null> = computed(() => this._userData());
@@ -34,5 +36,9 @@ export class TopbarComponent {
             ? 'dark'
             : 'white';
     return logo;
+  }
+
+  logout() {
+    this.authSV.logout();
   }
 }
