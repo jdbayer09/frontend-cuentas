@@ -15,12 +15,20 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
+        path: 'categories',
+        data: {
+          breadcrumb: 'Categorias'
+        },
+        loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
   },
+
 ];
 
 @NgModule({
