@@ -5,6 +5,7 @@ import { ActivateRoutingModule } from './activate-routing.module';
 import { ActivateComponent } from './activate.component';
 import { MessageModule } from 'primeng/message';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { StyleClassModule } from 'primeng/styleclass';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
     CommonModule,
     ActivateRoutingModule,
     MessageModule,
-    ProgressBarModule
+    ProgressBarModule,
+    StyleClassModule
   ]
 })
 export class ActivateModule { }

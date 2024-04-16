@@ -31,4 +31,11 @@ export class PublicUserService {
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
+  forgotPass( email: String ): Observable<MessageResponse<UserBaseData>> {
+    const url  = `${ this.baseUrl }/forgot-password/${email}`;
+    return this.http.put<MessageResponse<UserBaseData>>( url, {} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
 }
