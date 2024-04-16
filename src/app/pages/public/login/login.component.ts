@@ -2,7 +2,6 @@ import { Component, Signal, WritableSignal, computed, inject, signal } from '@an
 import { AuthService } from '../../../services/security/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../../../interfaces/user';
 
 @Component({
@@ -21,8 +20,6 @@ export class LoginComponent {
   private _error: WritableSignal<string | null> = signal(null);
   error: Signal<string | null> = computed(() => this._error());
 
-  tittle = environment.public.tittle;
-  info = environment.public.info
 
   loginForm: FormGroup = this.formBuilder.group({
     email:    [

@@ -4,7 +4,7 @@ import { environment } from "../../../environments/environment";
 @Component({
   selector: 'app-public',
   templateUrl: './public.component.html',
-  styles: ''
+  styleUrls: ['./public.component.scss']
 })
 export class PublicComponent {
   tittle = environment.public.tittle;
