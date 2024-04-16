@@ -77,6 +77,10 @@
         background: var(--orange-200);
         color: var(--orange-800);
     }
+    &.status-gray {
+      background: #b1b0b0;
+      color: #4d4d4d;
+  }
 }
 
 .order-badge {
