@@ -39,6 +39,6 @@ export class TopbarComponent {
   }
 
   logout() {
-    this.authSV.logout();
+    this.authSV.logout(true);
   }
 }

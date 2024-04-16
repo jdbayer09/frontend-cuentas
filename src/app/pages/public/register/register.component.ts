@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUserRequest } from '../../../interfaces/user';
+import { PublicUserService } from '../../../services/public/user.service';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class RegisterComponent {
 
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private publicUserSV = inject(PublicUserService);
 
   tittle = environment.public.tittle;
   info = environment.public.info;
@@ -73,6 +75,23 @@ export class RegisterComponent {
     const data: RegisterUserRequest = this.registerForm.value;
     if (data.password === data.confirmPassword) {
       //TODO: Configuracion de servicio de registro.
+      this.publicUserSV.register(data).subscribe({
+        next: (resp) => {
+          setTimeout(() => {
+            this._loading.set(false);
+            this._successMessage.set(resp.message);
+            this.registerForm.enable();
+          }, 500);
+        },
+        error: err => {
+          setTimeout(() => {
+            this._error.set(err);
+            this._loading.set(false);
+            this.registerForm.enable();
+          }, 500);
+        }
+      });
+      this
     } else {
       setTimeout(() => {
         this._error.set("Las contraseñas deben ser iguales.");

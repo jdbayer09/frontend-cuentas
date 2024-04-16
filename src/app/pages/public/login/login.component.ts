@@ -51,16 +51,15 @@ export class LoginComponent {
         setTimeout(() => {
           this._loading.set(false);
           this.router.navigateByUrl('/z/dashboard', {replaceUrl: true});
+          this.loginForm.enable();
         }, 500);
       },
       error: err => {
         setTimeout(() => {
           this._error.set(err);
           this._loading.set(false);
+          this.loginForm.enable();
         }, 500);
-      },
-      complete: () => {
-        this.loginForm.enable();
       }
     });
   }

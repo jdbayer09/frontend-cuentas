@@ -38,14 +38,16 @@ export class AuthService {
       );
   }
 
-  logout() {
+  logout(navigate: boolean = false) {
     this.storage.remove(StorageKeys.USER_INFO_TOKEN);
     this.storage.remove(StorageKeys.USER_INFO);
     this.storage.remove(StorageKeys.USER_INFO_EXPIRATION_TOKEN);
 
     this._currentUser.set(null);
     this._authStatus.set( AuthStatus.notAuthenticated );
-    this.router.navigateByUrl('/p/login', {replaceUrl: true});
+    if (navigate) {
+      this.router.navigateByUrl('/p/login', {replaceUrl: true});
+    }
   }
 
   private checkAuthStatus(): void {
@@ -65,7 +67,7 @@ export class AuthService {
           map( ({ user, token, expirationToken}) => this.setAuthentication( user, token, expirationToken )),
           catchError((err) => {
             this._authStatus.set( AuthStatus.notAuthenticated );
-            this.logout();
+            this.logout(true);
             return of(err);
           })
         ).subscribe();
