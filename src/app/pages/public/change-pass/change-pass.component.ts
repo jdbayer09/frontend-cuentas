@@ -2,7 +2,6 @@ import { Component, OnInit, Signal, WritableSignal, computed, inject, signal } f
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicUserService } from '../../../services/public/user.service';
-import { environment } from '../../../../environments/environment';
 import { ChangePassUserRequest } from '../../../interfaces/user/changePassRequest.interface';
 
 @Component({
@@ -11,15 +10,10 @@ import { ChangePassUserRequest } from '../../../interfaces/user/changePassReques
   styleUrl: './change-pass.component.scss'
 })
 export class ChangePassComponent implements OnInit{
-
-
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   private publicUserSV = inject(PublicUserService);
   private act = inject(ActivatedRoute);
-
-  tittle = environment.public.tittle;
-  info = environment.public.info;
 
   private _loading: WritableSignal<boolean> = signal(false);
   loading: Signal<boolean> = computed(() => this._loading());

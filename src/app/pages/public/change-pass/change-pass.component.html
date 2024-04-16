@@ -1,53 +1,42 @@
-<div class="flex h-screen">
-  <div class="w-full lg:w-4 h-full text-center px-6 py-6 flex flex-column justify-content-between">
-      <img [src]="'assets/layout/images/logo-white.svg'" class="h-4rem mt-4" alt="diamond-layout" />
-      <div class="flex flex-column align-items-center gap-4">
-          <div class="mb-3">
-              <h2>Cambiar Contraseña</h2>
-          </div>
-          <form autocomplete="off" [formGroup]="changePassForm" (ngSubmit)="changePass()">
-            <div class="flex flex-column gap-4">
-              @if (successMessage() === undefined) {
-                <span class="p-input-icon-left w-full">
-                    <i class="pi pi-lock z-2"></i>
-                    <p-password placeholder="Contraseña" formControlName="password" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
-                </span>
-                <span class="p-input-icon-left w-full">
-                  <i class="pi pi-lock z-2"></i>
-                  <p-password placeholder="Confirmar Contraseña" formControlName="confirmPassword" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
-                </span>
+<div class="flex flex-column align-items-center gap-4" style="margin-top: -40rem;">
+    <div class="mb-3">
+        <h2>Cambiar Contraseña</h2>
+    </div>
+    <form autocomplete="off" [formGroup]="changePassForm" (ngSubmit)="changePass()">
+      <div class="flex flex-column gap-4">
+        @if (successMessage() === undefined) {
+          <span class="p-input-icon-left w-full">
+              <i class="pi pi-lock z-2"></i>
+              <p-password placeholder="Contraseña" formControlName="password" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
+          </span>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-lock z-2"></i>
+            <p-password placeholder="Confirmar Contraseña" formControlName="confirmPassword" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
+          </span>
 
-                @if(!loading()) {
-                  <button pButton pRipple label="Cambiar Contraseña" type="submit" class="w-full mb-4" [disabled]="changePassForm.invalid"></button>
-                }
-              } @else {
-                <p-message severity="success" [text]="successMessage()"></p-message>
-              }
-            </div>
-            @if (loading()) {
-              <br>
-              <p-progressBar mode="indeterminate"></p-progressBar>
-            }
-          </form>
-          @if (error() !== null) {
-            <div class="mb-3">
-              <p style="text-align: center; color: #ff4032;">{{error()}}</p>
-            </div>
-          }
           @if(!loading()) {
-            <span class="font-semibold text-color-secondary">
-              <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
-                Iniciar Sesión
-              </a>
-            </span>
+            <button pButton pRipple label="Cambiar Contraseña" type="submit" class="w-full mb-4" [disabled]="changePassForm.invalid"></button>
           }
+        } @else {
+          <p-message severity="success" [text]="successMessage()"></p-message>
+        }
       </div>
-      <p class="text-color-secondary font-semibold"></p>
-  </div>
-  <div class="w-8 hidden lg:flex flex-column justify-content-between align-items-center px-6 py-6 bg-cover bg-norepeat" style="background-image: url('assets/demo/images/auth/bg-login.jpg')">
-      <div class="mt-auto mb-auto">
-          <span class="block text-white text-7xl font-semibold" style="text-align: center;">{{tittle}}</span>
-          <span class="block text-white text-3xl mt-4" style="text-align: justify;">{{info}}</span>
+      @if (loading()) {
+        <br>
+        <p-progressBar mode="indeterminate"></p-progressBar>
+      }
+    </form>
+    @if (error() !== null) {
+      <div class="mb-3">
+        <p style="text-align: center; color: #ff4032;">{{error()}}</p>
       </div>
-  </div>
+    }
+    @if(!loading()) {
+      <span class="font-semibold text-color-secondary">
+        <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
+          Iniciar Sesión
+        </a>
+      </span>
+    }
 </div>
+<p class="text-color-secondary font-semibold"></p>

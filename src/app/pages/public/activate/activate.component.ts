@@ -1,5 +1,4 @@
 import { Component, OnInit, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicUserService } from '../../../services/public/user.service';
 
@@ -13,10 +12,6 @@ export class ActivateComponent implements OnInit {
   private router = inject(Router);
   private act = inject(ActivatedRoute);
   private publicUserSV = inject(PublicUserService);
-
-  tittle = environment.public.tittle;
-  info = environment.public.info;
-
 
   private _error: WritableSignal<string | null> = signal(null);
   error: Signal<string | null> = computed(() => this._error());
