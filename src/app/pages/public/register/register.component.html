@@ -33,22 +33,8 @@
                 @if(!loading()) {
                   <button pButton pRipple label="Regístrese" type="submit" class="w-full mb-4" [disabled]="registerForm.invalid"></button>
                 }
-
-                @if (error() !== null) {
-                  <div class="mb-3">
-                    <p style="text-align: center; color: #ff4032;">{{error()}}</p>
-                  </div>
-                }
               } @else {
                 <p-message severity="success" [text]="successMessage()"></p-message>
-              }
-              @if(!loading()) {
-                <span class="font-semibold text-color-secondary">
-                  ¿Ya tienes una cuenta?,
-                  <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
-                    Iniciar Sesión
-                  </a>
-                </span>
               }
             </div>
             @if (loading()) {
@@ -56,6 +42,19 @@
               <p-progressBar mode="indeterminate"></p-progressBar>
             }
           </form>
+          @if (error() !== null) {
+            <div class="mb-3">
+              <p style="text-align: center; color: #ff4032;">{{error()}}</p>
+            </div>
+          }
+          @if(!loading()) {
+            <span class="font-semibold text-color-secondary">
+              ¿Ya tienes una cuenta?,
+              <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
+                Iniciar Sesión
+              </a>
+            </span>
+          }
       </div>
       <p class="text-color-secondary font-semibold"></p>
   </div>
