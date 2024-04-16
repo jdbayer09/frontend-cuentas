@@ -17,7 +17,7 @@ const routes: Routes = [
       {
         path: 'categories',
         data: {
-          breadcrumb: 'Categorias'
+          breadcrumb: 'Categorías'
         },
         loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule)
       },

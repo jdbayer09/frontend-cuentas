@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
               icon: 'pi pi-th-large',
               items: [
                   {
-                      label: 'Categorias',
+                      label: 'Categorías',
                       icon: 'pi pi-fw pi-book',
                       routerLink: ['/z/categories']
                   }
