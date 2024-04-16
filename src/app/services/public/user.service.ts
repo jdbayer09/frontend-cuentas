@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { RegisterUserRequest, UserBaseData } from '../../interfaces/user';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 import { Observable, catchError, throwError } from 'rxjs';
+import { ChangePassUserRequest } from '../../interfaces/user/changePassRequest.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,18 @@ export class PublicUserService {
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
+
   forgotPass( email: String ): Observable<MessageResponse<UserBaseData>> {
     const url  = `${ this.baseUrl }/forgot-password/${email}`;
     return this.http.put<MessageResponse<UserBaseData>>( url, {} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  changePass( code: String, body: ChangePassUserRequest ): Observable<MessageResponse<UserBaseData>> {
+    const url  = `${ this.baseUrl }/change-password/${code}`;
+    return this.http.put<MessageResponse<UserBaseData>>( url, body )
       .pipe(
         catchError( err => throwError( () => err.error.errorMessage ))
       );
