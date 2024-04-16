@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { noAuthGuard } from '../../guards/auth';
+import { PublicComponent } from './public.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: PublicComponent,
     children: [
       {
         path: '',
@@ -25,10 +27,6 @@ const routes: Routes = [
         path: 'forgot-pass',
         loadChildren: () => import('./forgot-pass/forgot-pass.module').then(m => m.ForgotPassModule),
         canActivate: [noAuthGuard]
-      },
-      {
-        path: 'info',
-        loadChildren: () => import('./info/info.module').then(m => m.InfoModule)
       },
       {
         path: 'activate/:code',
