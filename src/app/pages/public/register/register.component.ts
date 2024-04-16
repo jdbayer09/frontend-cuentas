@@ -74,7 +74,6 @@ export class RegisterComponent {
     this.registerForm.disable();
     const data: RegisterUserRequest = this.registerForm.value;
     if (data.password === data.confirmPassword) {
-      //TODO: Configuracion de servicio de registro.
       this.publicUserSV.register(data).subscribe({
         next: (resp) => {
           setTimeout(() => {
@@ -91,7 +90,6 @@ export class RegisterComponent {
           }, 500);
         }
       });
-      this
     } else {
       setTimeout(() => {
         this._error.set("Las contraseñas deben ser iguales.");

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ActivateRoutingModule } from './activate-routing.module';
 import { ActivateComponent } from './activate.component';
+import { MessageModule } from 'primeng/message';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { ActivateComponent } from './activate.component';
   ],
   imports: [
     CommonModule,
-    ActivateRoutingModule
+    ActivateRoutingModule,
+    MessageModule,
+    ProgressBarModule
   ]
 })
 export class ActivateModule { }

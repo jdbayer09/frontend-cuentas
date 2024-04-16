@@ -23,4 +23,12 @@ export class PublicUserService {
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
+
+  activate( code: String ): Observable<MessageResponse<UserBaseData>> {
+    const url  = `${ this.baseUrl }/activate-user/${code}`;
+    return this.http.put<MessageResponse<UserBaseData>>( url, {} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
 }
