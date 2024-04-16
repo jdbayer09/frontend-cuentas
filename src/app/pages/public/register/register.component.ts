@@ -1,5 +1,4 @@
 import { Component, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUserRequest } from '../../../interfaces/user';
@@ -15,9 +14,6 @@ export class RegisterComponent {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   private publicUserSV = inject(PublicUserService);
-
-  tittle = environment.public.tittle;
-  info = environment.public.info;
 
   private _loading: WritableSignal<boolean> = signal(false);
   loading: Signal<boolean> = computed(() => this._loading());
