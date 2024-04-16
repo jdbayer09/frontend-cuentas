@@ -15,9 +15,6 @@ export class ForgotPassComponent {
   private formBuilder = inject(FormBuilder);
   private publicUserSV = inject(PublicUserService);
 
-  tittle = environment.public.tittle;
-  info = environment.public.info;
-
   private _loading: WritableSignal<boolean> = signal(false);
   loading: Signal<boolean> = computed(() => this._loading());
 
