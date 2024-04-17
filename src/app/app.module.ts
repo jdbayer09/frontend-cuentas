@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { registerLocaleData } from '@angular/common';
 import localeEsCO from '@angular/common/locales/es-CO';
+import { MessageService } from 'primeng/api';
 
 registerLocaleData(localeEsCO);
 
@@ -25,7 +26,8 @@ registerLocaleData(localeEsCO);
     {
       provide: LOCALE_ID,
       useValue: 'es-co'
-    }
+    },
+    MessageService
   ],
   bootstrap: [
     AppComponent
