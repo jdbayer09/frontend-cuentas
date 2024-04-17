@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CategoriesService } from '../../../services/categories/categories.service';
-import { CategoryResponse } from '../../../interfaces/categories';
+import { CategoryRequest, CategoryResponse } from '../../../interfaces/categories';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-categories',
@@ -23,8 +24,32 @@ export class CategoriesComponent implements OnInit{
   listCategories = computed<CategoryResponse[]>(() => this._listCategories());
   //*------------------------------------------------
 
+  //? Variables
+
+  //? -----------------------------------------------
+
   ngOnInit(): void {
     this.loadListCategories();
+  }
+
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  newCategory() {
+
+  }
+
+  enableCategory(category: CategoryRequest) {
+
+  }
+
+  disableCategory(category: CategoryRequest) {
+
+  }
+
+  editCategory(category: CategoryRequest) {
+
   }
 
   private loadListCategories() {
