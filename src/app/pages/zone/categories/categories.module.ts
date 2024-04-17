@@ -21,9 +21,6 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextModule,
     TooltipModule
 
-  ],
-  providers: [
-
   ]
 })
 export class CategoriesModule { }

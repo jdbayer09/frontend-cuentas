@@ -3,7 +3,6 @@ import { CategoriesService } from '../../../services/categories/categories.servi
 import { BaseCategory, Category } from '../../../interfaces/categories';
 import { Table } from 'primeng/table';
 import { UtilService } from '../../../services/util/util.service';
-import { ConfirmationService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { MessageResponse } from '../../../interfaces/base/messageRespones.interface';
 
@@ -16,7 +15,6 @@ export class CategoriesComponent implements OnInit{
   //! Inyecciones
   private categorySV = inject(CategoriesService);
   private utilSV     = inject(UtilService);
-  private confirmSV  = inject(ConfirmationService);
   //! -----------------------------------------------
 
   //* Señales
@@ -26,10 +24,6 @@ export class CategoriesComponent implements OnInit{
   private _listCategories = signal<Category[]>([]);
   listCategories = computed<Category[]>(() => this._listCategories());
   //*------------------------------------------------
-
-  //? Variables
-
-  //? -----------------------------------------------
 
   ngOnInit(): void {
     this.loadListCategories();
@@ -96,6 +90,4 @@ export class CategoriesComponent implements OnInit{
       });
     }, 500);
   }
-
-
 }

@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { StorageService } from './storage.service';
 import { StorageKeys } from '../../enums';
 import { Confirmation, ConfirmationService, MessageService } from 'primeng/api';
