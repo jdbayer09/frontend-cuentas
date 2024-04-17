@@ -1,4 +1,4 @@
-export interface BaseCategoryResponse {
+export interface BaseCategory {
   id:    number;
   name:  string;
   color: string;

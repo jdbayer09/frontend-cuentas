@@ -1,3 +1,3 @@
-export { BaseCategoryResponse } from './baseCategoryResponse.interface';
-export { CategoryResponse } from './categoryResponse.interface';
+export { BaseCategory } from './baseCategory.interface';
+export { Category } from './category.interface';
 export { CategoryRequest } from './categoryRequest.interface';
