@@ -1,10 +1,12 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CategoriesService } from '../../../services/categories/categories.service';
-import { BaseCategory, Category } from '../../../interfaces/categories';
+import { BaseCategory, Category, CategoryRequest } from '../../../interfaces/categories';
 import { Table } from 'primeng/table';
 import { UtilService } from '../../../services/util/util.service';
 import { Observable } from 'rxjs';
 import { MessageResponse } from '../../../interfaces/base/messageRespones.interface';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CategoryModalComponent } from '../../../modals/category-modal/category-modal.component';
 
 @Component({
   selector: 'app-categories',
@@ -15,6 +17,7 @@ export class CategoriesComponent implements OnInit{
   //! Inyecciones
   private categorySV = inject(CategoriesService);
   private utilSV     = inject(UtilService);
+  private dialogSV   = inject(DialogService);
   //! -----------------------------------------------
 
   //* Señales
@@ -23,6 +26,9 @@ export class CategoriesComponent implements OnInit{
 
   private _listCategories = signal<Category[]>([]);
   listCategories = computed<Category[]>(() => this._listCategories());
+
+  private _modalCategoryRef = signal<DynamicDialogRef | undefined>(undefined);
+  modalCategoryRef = computed<DynamicDialogRef | undefined>(() => this._modalCategoryRef());
   //*------------------------------------------------
 
   ngOnInit(): void {
@@ -49,12 +55,26 @@ export class CategoriesComponent implements OnInit{
     }, 500);
   }
 
-  newCategory() {
 
-  }
-
-  editCategory(category: Category) {
-
+  openModalCategories(type: 'edit' | 'create', category?: Category) {
+    this._modalCategoryRef.set(this.dialogSV.open(CategoryModalComponent,{
+      header: `${(type === 'edit'? 'Actualizar' : 'Nueva')} Categoría` ,
+      width: '50rem',
+      closable: false,
+      data: {
+        type,
+        category
+      }
+    }));
+    this.modalCategoryRef()?.onClose.subscribe((resp: {categoryRequest: null | CategoryRequest}) => {
+      if (resp && resp.categoryRequest) {
+        if (type === 'edit' && category) {
+          this.serviceAction(this.categorySV.updateCategory(category, resp.categoryRequest));
+        } else if (type === 'create') {
+          this.serviceAction(this.categorySV.createCategory(resp.categoryRequest));
+        }
+      }
+    });
   }
 
   enableCategory(category: Category) {
@@ -88,6 +108,7 @@ export class CategoriesComponent implements OnInit{
           this._loading.set(false);
         }
       });
+      this._modalCategoryRef.set(undefined);
     }, 500);
   }
 }

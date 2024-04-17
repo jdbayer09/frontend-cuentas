@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
+import { CategoryModalModule } from '../../../modals/category-modal/category-modal.module';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,8 @@ import { TooltipModule } from 'primeng/tooltip';
     TableModule,
     ButtonModule,
     InputTextModule,
-    TooltipModule
-
+    TooltipModule,
+    CategoryModalModule
   ]
 })
 export class CategoriesModule { }

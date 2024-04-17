@@ -3,7 +3,7 @@ import { UtilService } from '../util/util.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Category } from '../../interfaces/categories';
+import { BaseCategory, Category, CategoryRequest } from '../../interfaces/categories';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 
 @Injectable({
@@ -42,6 +42,22 @@ export class CategoriesService {
   enableCategory(category: Category): Observable<MessageResponse<number>> {
     const url  = `${ this.baseUrl }/enable/${category.id}`;
     return this.http.patch<MessageResponse<number>>( url, {}, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  createCategory(request: CategoryRequest): Observable<MessageResponse<BaseCategory>> {
+    const url  = `${ this.baseUrl }/create`;
+    return this.http.post<MessageResponse<BaseCategory>>( url, request, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  updateCategory(category: Category, request: CategoryRequest): Observable<MessageResponse<BaseCategory>> {
+    const url  = `${ this.baseUrl }/update/${category.id}`;
+    return this.http.put<MessageResponse<BaseCategory>>( url, request, {headers: this.httpHeaders()} )
       .pipe(
         catchError( err => throwError( () => err.error.errorMessage ))
       );
