@@ -20,6 +20,10 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     InputTextModule,
     TooltipModule
+
+  ],
+  providers: [
+
   ]
 })
 export class CategoriesModule { }
