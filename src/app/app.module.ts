@@ -8,7 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { registerLocaleData } from '@angular/common';
 import localeEsCO from '@angular/common/locales/es-CO';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 registerLocaleData(localeEsCO);
 
@@ -27,7 +28,9 @@ registerLocaleData(localeEsCO);
       provide: LOCALE_ID,
       useValue: 'es-co'
     },
-    MessageService
+    MessageService,
+    ConfirmationService,
+    DialogService
   ],
   bootstrap: [
     AppComponent
