@@ -4,14 +4,14 @@ import { CategoriesService } from '../../services/categories/categories.service'
 import { Observable } from 'rxjs';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 import { BaseCategory, Category, CategoryRequest } from '../../interfaces/categories';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-category-modal',
   templateUrl: './category-modal.component.html',
   styleUrl: './category-modal.component.scss'
 })
-export class CategoryModalComponent implements OnInit{
+export class CategoryModalComponent {
 
 
   //! Inyecciones
@@ -25,23 +25,17 @@ export class CategoryModalComponent implements OnInit{
   private _loading = signal<boolean>(false);
   loading = computed<boolean>(() => this._loading());
 
-  private _type = signal<'edit' | 'create'>('create');
+  private _type = signal<'edit' | 'create'>(this.config.data.type);
   type = computed<'edit' | 'create'>(() => this._type());
-  private _category = signal<Category | any>(undefined);
-  category = computed<Category | any>(() => this._category());
+  private _category = signal<Category>(this.config.data.category);
+  category = computed<Category>(() => this._category());
   //*------------------------------------------------
 
-  formCategory: FormGroup = this.formBuilder.group({});
+  formCategory!: FormGroup;
 
-
-
-  ngOnInit(): void {
-    this._type.set(this.config.data.type);
-    if (this.type() === 'edit') {
-      this._category.set(this.config.data.category);
-    }
+  constructor() {
+    this.buildForm();
   }
-
 
   saveAction() {
     const data:CategoryRequest = this.formCategory.value;
@@ -67,4 +61,35 @@ export class CategoryModalComponent implements OnInit{
       });
     }, 500);
   }
+
+  private buildForm() {
+    this.formCategory = this.formBuilder.group({
+      name: [
+        this.category()?.name ?? null,
+        [
+          Validators.required,
+          Validators.maxLength(60)
+        ]
+      ],
+      description: [
+        this.category()?.description ?? null,
+        []
+      ],
+      color: [
+        this.category()?.color ?? null,
+        [
+          Validators.required,
+          Validators.maxLength(16)
+        ]
+      ],
+      icon: [
+        this.category()?.icon ?? null,
+        [
+          Validators.required,
+          Validators.maxLength(20)
+        ]
+      ]
+    });
+  }
+
 }
