@@ -1,10 +1,11 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { Observable } from 'rxjs';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 import { BaseCategory, Category, CategoryRequest } from '../../interfaces/categories';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { COLORS, ICONS } from '../../data';
 
 @Component({
   selector: 'app-category-modal',
@@ -13,6 +14,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CategoryModalComponent {
 
+  listColors = COLORS;
+  listIcons = ICONS;
 
   //! Inyecciones
   private config      = inject(DynamicDialogConfig);
@@ -29,6 +32,9 @@ export class CategoryModalComponent {
   type = computed<'edit' | 'create'>(() => this._type());
   private _category = signal<Category>(this.config.data.category);
   category = computed<Category>(() => this._category());
+
+  private _error = signal<string | null>(null);
+  error = computed<string | null>(() => this._error());
   //*------------------------------------------------
 
   formCategory!: FormGroup;
@@ -49,17 +55,23 @@ export class CategoryModalComponent {
 
   private serviceAction(observable: Observable<MessageResponse<BaseCategory>>) {
     this._loading.set(true);
+    this._error.set(null);
+    this.formCategory.disable();
     setTimeout(() => {
       observable.subscribe({
         next: resp => {
           this.ref.close({categoryResponse: resp})
         },
         error: err => {
-          //TODO: Mensaje en de error en Modal
+          this._error.set(err);
           this._loading.set(false);
+          this.formCategory.enable();
         }
       });
     }, 500);
+  }
+  closeModal() {
+    this.ref.close();
   }
 
   private buildForm() {
@@ -90,6 +102,7 @@ export class CategoryModalComponent {
         ]
       ]
     });
+    this.formCategory.enable();
   }
 
 }
