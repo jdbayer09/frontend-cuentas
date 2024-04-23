@@ -67,7 +67,7 @@ export class CategoriesComponent implements OnInit, OnDestroy{
         category
       }
     }));
-    this.modalCategoryRef()?.onClose.subscribe((resp: {categoryResponse: MessageResponse<number | BaseCategory>}) => {
+    this.modalCategoryRef()?.onClose.subscribe((resp: {categoryResponse: MessageResponse<BaseCategory>}) => {
       if (resp && resp.categoryResponse) {
         this.utilSV.setMessage(resp.categoryResponse.tittle, resp.categoryResponse.message, 'success');
         this.loadListCategories();
