@@ -22,10 +22,12 @@ export class AuthService {
 
   //! Al mundo exterior
   currentUser: Signal<UserBaseData | null> = computed( () => this._currentUser() );
-  authStatus: Signal<AuthStatus> = computed( () => this._authStatus() );
+  authStatus: Signal<AuthStatus> = computed( () =>
+    this._authStatus()
+   );
 
   constructor() {
-    this.checkAuthStatus();
+    this.checkAuthStatus().subscribe();
   }
 
   login( loginRequest: LoginRequest ): Observable<boolean> {
@@ -50,19 +52,18 @@ export class AuthService {
     }
   }
 
-  private checkAuthStatus(): void {
+  private checkAuthStatus(): Observable<boolean> {
     const token = this.storage.get<string>(StorageKeys.USER_INFO_TOKEN);
-
     if ( !token ) {
       this.logout();
-      return;
+      return of(false);
     } else {
       const url   = `${ this.baseUrl }/security/validate-session`;
 
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${ token }`);
-      this.http.get<CheckTokenResponse>(url, { headers })
+      return this.http.get<CheckTokenResponse>(url, { headers })
         .pipe(
           map( ({ user, token, expirationToken}) => this.setAuthentication( user, token, expirationToken )),
           catchError((err) => {
@@ -70,7 +71,7 @@ export class AuthService {
             this.logout(true);
             return of(err);
           })
-        ).subscribe();
+        );
     }
   }
 

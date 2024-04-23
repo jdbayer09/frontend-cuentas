@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ZoneRoutingModule } from './zone-routing.module';
 import { ZoneComponent } from './zone.component';
 import { LayoutModule } from '../../layout/layout.module';
-
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,9 @@ import { LayoutModule } from '../../layout/layout.module';
   imports: [
     CommonModule,
     ZoneRoutingModule,
-    LayoutModule
+    LayoutModule,
+    ToastModule,
+    ConfirmDialogModule
   ]
 })
 export class ZoneModule { }

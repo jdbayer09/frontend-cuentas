@@ -1,0 +1,88 @@
+<form [formGroup]="formCategory" (ngSubmit)="saveAction()">
+  <div class="p-fluid">
+    <div class="formgrid grid">
+        <div class="field col-12 md:col-12">
+            <label>
+                Nombre
+                <span class="required">*</span>
+            </label>
+            <input pInputText type="text" formControlName="name"/>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label>
+            Color
+            <span class="required">*</span>
+          </label>
+          <p-dropdown
+            formControlName="color"
+            [options]="listColors"
+            placeholder="Seleccione Color"
+            appendTo="body"
+            optionValue="value"
+            [showClear]="true">
+            <ng-template pTemplate="selectedItem" let-selectedColor>
+              <span [class]="'customer-badge status-' + selectedColor.value.toLowerCase()">{{selectedColor.name}}</span>
+            </ng-template>
+            <ng-template let-color pTemplate="item">
+              <span [class]="'customer-badge status-' + color.value.toLowerCase()">{{color.name}}</span>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label>
+            Icono
+            <span class="required">*</span>
+          </label>
+          <p-dropdown
+            formControlName="icon"
+            [options]="listIcons"
+            placeholder="Seleccione Icono"
+            appendTo="body"
+            [showClear]="true">
+            <ng-template pTemplate="selectedItem" let-selectedIcon>
+              <i [class]="'pi ' + selectedIcon" style="font-size: 1rem"></i>
+            </ng-template>
+            <ng-template let-icon pTemplate="item">
+              <i [class]="'pi ' + icon" style="font-size: 2rem;"></i>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="field col-12 md:col-12">
+          <label>
+            Descripción
+          </label>
+          <textarea rows="2" cols="30" pInputTextarea formControlName="description"></textarea>
+        </div>
+    </div>
+  </div>
+  <div class="field col animate__animated animate__fadeIn" *ngIf="loading()">
+    <p-progressBar
+        class="w-20rem animate__animated animate__fadeIn"
+        mode="indeterminate">
+    </p-progressBar>
+  </div>
+  @if(error() !== null) {
+    <label class="error">
+      <em>
+          {{error()}}
+      </em>
+    </label>
+  }
+  <div class="mt-3 flex justify-content-end column-gap-4" *ngIf="!loading()">
+    <p-button
+        icon="pi pi-times-circle"
+        styleClass="p-button-sm p-button-secondary"
+        label="Cancelar"
+        (onClick)="closeModal()"
+    ></p-button>
+    <button
+        pButton
+        type="submit"
+        label="Guardar"
+        icon="pi pi-save"
+        [disabled]="this.formCategory.invalid"
+        class="p-button-sm p-button-success">
+    </button>
+</div>
+</form>
