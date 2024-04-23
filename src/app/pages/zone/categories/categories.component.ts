@@ -60,7 +60,7 @@ export class CategoriesComponent implements OnInit, OnDestroy{
   openModalCategories(type: 'edit' | 'create', category?: Category) {
     this._modalCategoryRef.set(this.dialogSV.open(CategoryModalComponent,{
       header: `${(type === 'edit'? 'Actualizar' : 'Nueva')} Categoría` ,
-      width: '50rem',
+      width: '40rem',
       closable: false,
       data: {
         type,
