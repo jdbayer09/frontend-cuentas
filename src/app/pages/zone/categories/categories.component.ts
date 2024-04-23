@@ -1,6 +1,6 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CategoriesService } from '../../../services/categories/categories.service';
-import { BaseCategory, Category, CategoryRequest } from '../../../interfaces/categories';
+import { BaseCategory, Category } from '../../../interfaces/categories';
 import { Table } from 'primeng/table';
 import { UtilService } from '../../../services/util/util.service';
 import { Observable } from 'rxjs';
@@ -13,11 +13,12 @@ import { CategoryModalComponent } from '../../../modals/category-modal/category-
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
-export class CategoriesComponent implements OnInit{
+export class CategoriesComponent implements OnInit, OnDestroy{
   //! Inyecciones
-  private categorySV = inject(CategoriesService);
-  private utilSV     = inject(UtilService);
-  private dialogSV   = inject(DialogService);
+  private categorySV  = inject(CategoriesService);
+  private utilSV      = inject(UtilService);
+  private dialogSV    = inject(DialogService);
+
   //! -----------------------------------------------
 
   //* Señales
@@ -66,15 +67,20 @@ export class CategoriesComponent implements OnInit{
         category
       }
     }));
-    this.modalCategoryRef()?.onClose.subscribe((resp: {categoryRequest: null | CategoryRequest}) => {
-      if (resp && resp.categoryRequest) {
-        if (type === 'edit' && category) {
-          this.serviceAction(this.categorySV.updateCategory(category, resp.categoryRequest));
-        } else if (type === 'create') {
-          this.serviceAction(this.categorySV.createCategory(resp.categoryRequest));
-        }
+    this.modalCategoryRef()?.onClose.subscribe((resp: {categoryResponse: MessageResponse<number | BaseCategory>}) => {
+      if (resp && resp.categoryResponse) {
+        this.utilSV.setMessage(resp.categoryResponse.tittle, resp.categoryResponse.message, 'success');
+        this.loadListCategories();
       }
+      this._modalCategoryRef.set(undefined);
     });
+  }
+
+  ngOnDestroy(): void {
+    if(this.modalCategoryRef()) {
+      this.modalCategoryRef()?.close();
+      this._modalCategoryRef.set(undefined);
+    }
   }
 
   enableCategory(category: Category) {
@@ -108,7 +114,6 @@ export class CategoriesComponent implements OnInit{
           this._loading.set(false);
         }
       });
-      this._modalCategoryRef.set(undefined);
     }, 500);
   }
 }
