@@ -22,12 +22,20 @@ const routes: Routes = [
         loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule)
       },
       {
+        path: 'payment-methods',
+        data: {
+          breadcrumb: 'Métodos de Pago'
+        },
+        loadChildren: () => import('./payment-methods/payment-methods.module').then(m => m.PaymentMethodsModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
   },
+
 
 ];
 
