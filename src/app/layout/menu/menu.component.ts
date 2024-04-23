@@ -33,7 +33,12 @@ export class MenuComponent implements OnInit {
                       label: 'Categorías',
                       icon: 'pi pi-fw pi-book',
                       routerLink: ['/z/categories']
-                  }
+                  },
+                  {
+                    label: 'Métodos de Pago',
+                    icon: 'pi pi-fw pi-money-bill',
+                    routerLink: ['/z/payment-methods']
+                }
               ]
           },
           { separator: true },
