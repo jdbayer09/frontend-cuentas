@@ -1,0 +1,37 @@
+<div class="flex flex-column align-items-center gap-4" style="margin-top: -40rem;">
+    <div class="mb-3">
+        <h2>Restablecer Contraseña</h2>
+    </div>
+    <form autocomplete="off" [formGroup]="forgotPassForm" (ngSubmit)="forgotPass()">
+      <div class="flex flex-column gap-4">
+        @if (successMessage() === undefined) {
+          <span class="p-input-icon-left w-full">
+              <i class="pi pi-envelope"></i>
+              <input type="email" pInputText class="w-full md:w-25rem" placeholder="Correo Electrónico" formControlName="email">
+          </span>
+          @if(!loading()) {
+            <button pButton pRipple label="Restablecer" type="submit" class="w-full mb-4" [disabled]="forgotPassForm.invalid"></button>
+          }
+        } @else {
+          <p-message severity="success" [text]="successMessage()"></p-message>
+        }
+      </div>
+      @if (loading()) {
+        <br>
+        <p-progressBar mode="indeterminate"></p-progressBar>
+      }
+    </form>
+    @if (error() !== null) {
+      <div class="mb-3">
+        <p style="text-align: center; color: #ff4032;">{{error()}}</p>
+      </div>
+    }
+    @if(!loading()) {
+      <span class="font-semibold text-color-secondary">
+        <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
+          Iniciar Sesión
+        </a>
+      </span>
+    }
+</div>
+<p class="text-color-secondary font-semibold"></p>

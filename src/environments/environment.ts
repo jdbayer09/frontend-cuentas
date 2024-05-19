@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://localhost:8080/itex/api/',
-  webSocket_url: 'ws://localhost:8080/itex/api/websocket',
-  encrypt_data_key: 'clave para encriptar los datos del local storage'
+  api_url: 'http://localhost:8081/cuentas/api',
+  public: {
+    tittle: 'CUENTAS PERSONALES',
+    info: 'Una aplicación de gestión de cuentas personales intuitiva y segura que ayuda a los usuarios a administrar sus finanzas de manera eficiente. Permite realizar seguimiento de gastos, presupuestos, ahorros y transacciones, ofreciendo herramientas para un control total y una planificación financiera efectiva, todo en un solo lugar.'
+  }
 };
 
 /*

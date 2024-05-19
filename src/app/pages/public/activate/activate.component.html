@@ -1,0 +1,25 @@
+<div class="flex flex-column align-items-center gap-4" style="margin-top: -40rem;">
+    <div class="mb-3">
+        <h2>Activación de Usuario</h2>
+    </div>
+    @if (!loading()) {
+      @if (error() !== null) {
+        <div class="mb-3">
+          <p style="text-align: center; color: #ff4032;">{{error()}}</p>
+        </div>
+      } @else {
+        <div class="flex flex-column gap-4">
+            <p-message severity="success" [text]="successMessage()"></p-message>
+        </div>
+        <span class="font-semibold text-color-secondary">
+          <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
+            Iniciar Sesión
+          </a>
+        </span>
+      }
+    }
+</div>
+@if (loading()) {
+  <p-progressBar mode="indeterminate"></p-progressBar>
+}
+<p class="text-color-secondary font-semibold"></p>

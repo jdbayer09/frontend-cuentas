@@ -37,6 +37,8 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/layout/styles/layout/preloading.css",
+              "src/assets/layout/styles/theme/theme-dark/indigo/theme.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -46,13 +48,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "900kb",
+                  "maximumError": "2mb"
                 }
               ],
               "outputHashing": "all",
@@ -110,5 +112,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "06d9cd9b-7953-4112-8a3f-5596bc33cfd0"
   }
 }

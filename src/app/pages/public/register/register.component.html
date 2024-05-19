@@ -1,0 +1,56 @@
+<div class="flex flex-column align-items-center gap-4" style="margin-top: -40rem;">
+    <div class="mb-3">
+        <h2>Regístrese</h2>
+        <p>Comencemos</p>
+    </div>
+    <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="flex flex-column gap-4">
+        @if (successMessage() === undefined) {
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-user"></i>
+            <input type="text" pInputText class="w-full md:w-25rem" placeholder="Nombres" formControlName="name">
+          </span>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-user"></i>
+            <input type="text" pInputText class="w-full md:w-25rem" placeholder="Apellidos" formControlName="lastName">
+          </span>
+          <span class="p-input-icon-left w-full">
+              <i class="pi pi-envelope"></i>
+              <input type="email" pInputText class="w-full md:w-25rem" placeholder="Correo Electrónico" formControlName="email">
+          </span>
+          <span class="p-input-icon-left w-full">
+              <i class="pi pi-lock z-2"></i>
+              <p-password placeholder="Contraseña" formControlName="password" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
+          </span>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-lock z-2"></i>
+            <p-password placeholder="Confirmar Contraseña" formControlName="confirmPassword" [feedback]="false" styleClass="w-full" [inputStyle]="{paddingLeft: '2.5rem'}" inputStyleClass="w-full md:w-25rem" [toggleMask]="true" ></p-password>
+          </span>
+
+          @if(!loading()) {
+            <button pButton pRipple label="Regístrese" type="submit" class="w-full mb-4" [disabled]="registerForm.invalid"></button>
+          }
+        } @else {
+          <p-message severity="success" [text]="successMessage()"></p-message>
+        }
+      </div>
+      @if (loading()) {
+        <br>
+        <p-progressBar mode="indeterminate"></p-progressBar>
+      }
+    </form>
+    @if (error() !== null) {
+      <div class="mb-3">
+        <p style="text-align: center; color: #ff4032;">{{error()}}</p>
+      </div>
+    }
+    @if(!loading()) {
+      <span class="font-semibold text-color-secondary">
+        ¿Ya tienes una cuenta?,
+        <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navLogin()">
+          Iniciar Sesión
+        </a>
+      </span>
+    }
+</div>
+<p class="text-color-secondary font-semibold"></p>

@@ -1,0 +1,36 @@
+
+<form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()" style="margin-top: -40rem;">
+  <div class="flex flex-column align-items-center gap-4">
+      <div class="mb-3">
+          <h2>Acceda a su cuenta</h2>
+          <p>
+            ¿No tienes una cuenta?,
+            <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navRegister()">
+              Registrarse
+            </a>
+          </p>
+      </div>
+      <input pInputText placeholder="Correo Electrónico" class="w-20rem" formControlName="email" type="email"/>
+      <p-password placeholder="Contraseña" inputStyleClass="w-20rem" formControlName="password" [feedback]="false"></p-password>
+      @if(!loading()) {
+        <button pButton label="Iniciar Sesión" type="submit" class="w-20rem" [disabled]="loginForm.invalid"></button>
+      }
+      @if (error() !== null) {
+        <div class="mb-3">
+          <p style="text-align: center; color: #ff4032;">{{error()}}</p>
+        </div>
+      }
+  </div>
+  @if (loading()) {
+    <br>
+    <p-progressBar mode="indeterminate"></p-progressBar>
+  }
+</form>
+<br><br>
+<p class="text-color-secondary font-semibold">
+  ¿Olvido su contraseña?,
+  <a class="text-primary hover:underline cursor-pointer font-medium" (click)="navForgotPass()">
+    Restablecer
+  </a>
+</p>
+
