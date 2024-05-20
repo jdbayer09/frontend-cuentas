@@ -30,6 +30,11 @@ export class MenuComponent implements OnInit {
               icon: 'pi pi-th-large',
               items: [
                   {
+                    label: 'Ingresos',
+                    icon: 'pi pi-fw pi-dollar',
+                    routerLink: ['/z/cash-receipts']
+                  },
+                  {
                       label: 'Categorías',
                       icon: 'pi pi-fw pi-book',
                       routerLink: ['/z/categories']
@@ -38,7 +43,7 @@ export class MenuComponent implements OnInit {
                     label: 'Métodos de Pago',
                     icon: 'pi pi-fw pi-money-bill',
                     routerLink: ['/z/payment-methods']
-                }
+                  }
               ]
           },
           { separator: true },

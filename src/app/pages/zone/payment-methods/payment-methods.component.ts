@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { UtilService } from '../../../services/util/util.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaymentMethodService } from '../../../services/paymentMethod/payment-method.service';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   templateUrl: './payment-methods.component.html',
   styleUrl: './payment-methods.component.scss'
 })
-export class PaymentMethodsComponent implements OnInit, OnDestroy {
+export class PaymentMethodsComponent implements OnInit {
 
   //! Inyecciones
   private paymentMethodSV   = inject(PaymentMethodService);
@@ -73,13 +73,6 @@ export class PaymentMethodsComponent implements OnInit, OnDestroy {
       }
       this._modalPaymentMethodRef.set(undefined);
     });
-  }
-
-  ngOnDestroy(): void {
-    if(this.modalPaymentMethodRef()) {
-      this.modalPaymentMethodRef()?.close();
-      this._modalPaymentMethodRef.set(undefined);
-    }
   }
 
   enablePaymentMethod(paymentMethod: PaymentMethod) {
