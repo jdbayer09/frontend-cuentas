@@ -129,6 +129,7 @@
             pButton
             class="p-button-outlined p-button-warning mb-2"
             icon="pi pi-pencil"
+            [disabled]="cashReceipt.paid"
             (click)="openModalCashReceipt('edit', cashReceipt)">
           </button>
           @if(!cashReceipt.paid) {

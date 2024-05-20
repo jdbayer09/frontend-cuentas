@@ -4,4 +4,6 @@ export interface CashReceiptRequest {
   month:  number;
   year:   number;
   color:  string;
+  replicate: boolean;
+  replicateVal: number;
 }

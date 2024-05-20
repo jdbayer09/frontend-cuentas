@@ -75,6 +75,8 @@ export class CashReceiptsComponent implements OnInit {
   }
 
   openModalCashReceipt(type: 'edit' | 'create', cashReceipt?: CashReceipt) {
+    if (type === 'edit' && cashReceipt?.paid)
+      return;
     this._modalCashReceiptRef.set(this.dialogSV.open(CashReceiptModalComponent,{
       header: `${(type === 'edit'? 'Actualizar' : 'Nueva')} Ingreso` ,
       width: '40rem',
