@@ -47,8 +47,8 @@ export class CashReceiptService {
       );
   }
 
-  listAllCashReceipt(): Observable<CashReceipt[]> {
-    const url  = `${ this.baseUrl }/list-all`;
+  listAllCashReceipt(year: number, month: number): Observable<CashReceipt[]> {
+    const url  = `${ this.baseUrl }/list-all?month=${month}&year=${year}`;
     return this.http.get<CashReceipt[]>( url, {headers: this.httpHeaders()} )
       .pipe(
         catchError( err => throwError( () => err.error.errorMessage ))
