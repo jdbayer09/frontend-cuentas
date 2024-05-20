@@ -29,12 +29,20 @@ const routes: Routes = [
         loadChildren: () => import('./payment-methods/payment-methods.module').then(m => m.PaymentMethodsModule)
       },
       {
+        path: 'cash-receipts',
+        data: {
+          breadcrumb: 'Ingresos'
+        },
+        loadChildren: () => import('./cash-receipts/cash-receipts.module').then(m => m.CashReceiptsModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
   },
+
 
 
 ];
