@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CategoriesService } from '../../../services/categories/categories.service';
 import { BaseCategory, Category } from '../../../interfaces/categories';
 import { Table } from 'primeng/table';
@@ -13,7 +13,7 @@ import { CategoryModalComponent } from '../../../modals/category-modal/category-
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
-export class CategoriesComponent implements OnInit, OnDestroy{
+export class CategoriesComponent implements OnInit{
   //! Inyecciones
   private categorySV  = inject(CategoriesService);
   private utilSV      = inject(UtilService);
@@ -74,13 +74,6 @@ export class CategoriesComponent implements OnInit, OnDestroy{
       }
       this._modalCategoryRef.set(undefined);
     });
-  }
-
-  ngOnDestroy(): void {
-    if(this.modalCategoryRef()) {
-      this.modalCategoryRef()?.close();
-      this._modalCategoryRef.set(undefined);
-    }
   }
 
   enableCategory(category: Category) {
