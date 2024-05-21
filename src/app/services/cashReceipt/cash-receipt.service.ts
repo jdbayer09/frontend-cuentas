@@ -47,6 +47,14 @@ export class CashReceiptService {
       );
   }
 
+  deleteCashReceipt(cashReceipt: CashReceipt): Observable<MessageResponse<CashReceipt>> {
+    const url  = `${ this.baseUrl }/delete/${cashReceipt.id}`;
+    return this.http.delete<MessageResponse<CashReceipt>>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
   listAllCashReceipt(year: number, month: number): Observable<CashReceipt[]> {
     const url  = `${ this.baseUrl }/list-all?month=${month}&year=${year}`;
     return this.http.get<CashReceipt[]>( url, {headers: this.httpHeaders()} )

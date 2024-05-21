@@ -74,6 +74,19 @@ export class CashReceiptsComponent implements OnInit {
     }
   }
 
+  deleteCashReceipt(cashReceipt: CashReceipt) {
+    if(cashReceipt.month <= (new Date().getMonth() + 1) && cashReceipt.year <= new Date().getFullYear()) {
+      this.utilSV.confirm({
+        message: `¿Esta seguro que desea eliminar el ingreso: "<b>${cashReceipt.name}</b>" ?`,
+        accept: () => {
+          this.serviceAction(this.cashReceiptSV.deleteCashReceipt(cashReceipt));
+        }
+      });
+    } else {
+      this.utilSV.setMessage('¡Error!', 'Solo se puede eliminar el pago ingresos del mes actual o inferior', 'error');
+    }
+  }
+
   getMonth(month: number): string {
     return this.utilSV.getMont(month);
   }

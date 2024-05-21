@@ -122,25 +122,33 @@
           <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': cashReceipt.paid, 'false-icon pi-times-circle text-pink-500': !cashReceipt.paid}" style="font-size: 1.5rem"></i>
         </td>
         <td style="text-align: center;">
-          <button
-            style="margin-right: 1rem;"
-            pTooltip="Editar"
-            tooltipPosition="left"
-            pButton
-            class="p-button-outlined p-button-warning mb-2"
-            icon="pi pi-pencil"
-            [disabled]="cashReceipt.paid"
-            (click)="openModalCashReceipt('edit', cashReceipt)">
-          </button>
           @if(!cashReceipt.paid) {
             <button
               style="margin-right: 1rem;"
+              pTooltip="Editar"
+              tooltipPosition="left"
+              pButton
+              class="p-button-outlined p-button-warning mb-2"
+              icon="pi pi-pencil"
+              (click)="openModalCashReceipt('edit', cashReceipt)">
+            </button>
+            <button
+              style="margin-right: 1rem;"
               pTooltip="Marcar como Pago"
-              tooltipPosition="right"
+              tooltipPosition="bottom"
               pButton
               class="p-button-outlined p-button-success mb-2"
               icon="pi pi-check-circle"
               (click)="payCashReceipt(cashReceipt)">
+            </button>
+            <button
+              style="margin-right: 1rem;"
+              pTooltip="Eliminar"
+              tooltipPosition="right"
+              pButton
+              class="p-button-outlined p-button-danger mb-2"
+              icon="pi pi-trash"
+              (click)="deleteCashReceipt(cashReceipt)">
             </button>
           }
         </td>
