@@ -47,10 +47,19 @@ export class AuthService {
 
     this._currentUser.set(null);
     this._authStatus.set( AuthStatus.notAuthenticated );
+    localStorage.setItem('LOGOUT', Date.now().toString());
     if (navigate) {
       this.router.navigateByUrl('/p/login', {replaceUrl: true});
       window.location.reload();
     }
+  }
+
+  private listenForLogout() {
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'LOGOUT') {
+        window.close();
+      }
+    });
   }
 
   private checkAuthStatus(): Observable<boolean> {
@@ -82,6 +91,7 @@ export class AuthService {
     this.storage.set(StorageKeys.USER_INFO_TOKEN, token);
     this.storage.set(StorageKeys.USER_INFO, user);
     this.storage.set(StorageKeys.USER_INFO_EXPIRATION_TOKEN, expirationToken);
+    this.listenForLogout();
     return true;
   }
 }
