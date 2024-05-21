@@ -38,6 +38,10 @@ export class LoginComponent {
     ],
   });
 
+  constructor() {
+    localStorage.removeItem('LOGOUT');
+  }
+
   login() {
     this._error.set(null);
     this._loading.set(true);
