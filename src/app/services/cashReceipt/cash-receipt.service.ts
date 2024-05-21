@@ -2,7 +2,7 @@ import { Injectable, Signal, computed, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../util/util.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CashReceipt, CashReceiptRequest } from '../../interfaces/cashReceipts';
+import { CashReceipt, CashReceiptRequest, DashboardCashReceipt } from '../../interfaces/cashReceipts';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 import { Observable, catchError, throwError } from 'rxjs';
 
@@ -50,6 +50,14 @@ export class CashReceiptService {
   listAllCashReceipt(year: number, month: number): Observable<CashReceipt[]> {
     const url  = `${ this.baseUrl }/list-all?month=${month}&year=${year}`;
     return this.http.get<CashReceipt[]>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  getDashboardCashReceipt(year: number, month: number): Observable<DashboardCashReceipt> {
+    const url  = `${ this.baseUrl }/dashboard?month=${month}&year=${year}`;
+    return this.http.get<DashboardCashReceipt>( url, {headers: this.httpHeaders()} )
       .pipe(
         catchError( err => throwError( () => err.error.errorMessage ))
       );

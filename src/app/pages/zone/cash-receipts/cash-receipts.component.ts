@@ -62,12 +62,16 @@ export class CashReceiptsComponent implements OnInit {
   }
 
   payCashReceipt(cashReceipt: CashReceipt) {
-    this.utilSV.confirm({
-      message: `¿Esta seguro que desea marcar como pago el ingreso: "<b>${cashReceipt.name}</b>" ?`,
-      accept: () => {
-        this.serviceAction(this.cashReceiptSV.payCashReceipt(cashReceipt));
-      }
-    });
+    if(cashReceipt.month <= (new Date().getMonth() + 1) && cashReceipt.year <= new Date().getFullYear()) {
+      this.utilSV.confirm({
+        message: `¿Esta seguro que desea marcar como pago el ingreso: "<b>${cashReceipt.name}</b>" ?`,
+        accept: () => {
+          this.serviceAction(this.cashReceiptSV.payCashReceipt(cashReceipt));
+        }
+      });
+    } else {
+      this.utilSV.setMessage('¡Error!', 'Solo se puede marcar como pago ingresos del mes actual o inferior', 'error');
+    }
   }
 
   getMonth(month: number): string {
