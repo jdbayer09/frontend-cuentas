@@ -1,42 +1,67 @@
 <div class="layout-dashboard">
   <div class="grid">
     <div class="col-12 flex align-items-center justify-content-between flex-wrap gap-5">
+
       <div class="mx-auto sm:mx-0">
-          <span class="block text-xl font-semibold mb-2">Infromación</span>
-          <!--
-          <div class="flex align-items-center">
-              <span class="font-semibold text-2xl">$57,401<span class="text-color-secondary text-base">.26</span></span>
-              <span class="text-green-700 border-round font-semibold ml-4 p-2 white-space-nowrap" [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">+$401 Today</span>
+        <div class="flex align-items-center">
+            <span class="font-semibold text-2xl">Ingresos:</span>
+            <span
+              class="text-gray-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+              [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">
+              {{dahboardCashReceipt().expectedValue  | currency:'COP'}}
+            </span>
+            <span
+              class="text-green-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+              [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">
+              {{dahboardCashReceipt().totalPaid  | currency:'COP'}}
+            </span>
+
+            <span
+              class="font-semibold text-2xl" style="margin-left: 0.5rem;">Gastos: </span>
+            <span
+              class="text-gray-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+              [style.backgroundColor]="'rgba(185, 62, 27, 0.1)'">
+              {{12240699  | currency:'COP'}}
+            </span>
+            <span
+              class="text-red-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+              [style.backgroundColor]="'rgba(185, 62, 27, 0.1)'">
+              {{2567117  | currency:'COP'}}
+            </span>
+
+            <span class="font-semibold text-2xl" style="margin-left: 0.5rem;">Sobrante: </span>
+            @if( (dahboardCashReceipt().totalPaid - 2567117) >= 0) {
+              <span
+                class="text-green-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+                [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">
+                {{dahboardCashReceipt().totalPaid - 2567117  | currency:'COP'}}
+              </span>
+            } @else {
+              <span
+                class="text-red-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+                [style.backgroundColor]="'rgba(185, 62, 27, 0.1)'">
+                {{dahboardCashReceipt().totalPaid - 2567117  | currency:'COP'}}
+              </span>
+            }
           </div>
-        -->
+      </div>
+      <div class="mx-auto sm:mx-0">
         <span style="margin-right: 1rem;">Mes:</span>
         <p-dropdown
           [options]="listMonths"
           [(ngModel)]="actualMonth"
           appendTo="body"
           optionValue="id"
+          (onChange)="searchData()"
           [disabled]="loading()"
           optionLabel="name"/>
         <span style="margin-right: 1rem; margin-left: 1rem;">Año:</span>
         <p-dropdown
           [options]="listYears"
+          (onChange)="searchData()"
           [(ngModel)]="actualYear"
           [disabled]="loading()"
           appendTo="body"/>
-      </div>
-      <div class="mx-auto sm:mx-0">
-        <button
-          pButton
-          pRipple
-          type="button"
-          [disabled]="loading()"
-          label="Buscar"
-          pTooltip="Buscar"
-          (click)="searchData()"
-          icon="pi pi-search"
-          class="p-button-rounded p-button-info"
-          iconPos="right">
-        </button>
       </div>
     </div>
     <div class="h-full col-12 xl:col-4">
