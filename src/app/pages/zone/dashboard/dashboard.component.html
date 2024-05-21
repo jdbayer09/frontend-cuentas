@@ -1,1 +1,117 @@
-<p>dashboard works!</p>
+<div class="layout-dashboard">
+  <div class="grid">
+    <div class="col-12 flex align-items-center justify-content-between flex-wrap gap-5">
+      <div class="mx-auto sm:mx-0">
+          <span class="block text-xl font-semibold mb-2">Infromación</span>
+          <!--
+          <div class="flex align-items-center">
+              <span class="font-semibold text-2xl">$57,401<span class="text-color-secondary text-base">.26</span></span>
+              <span class="text-green-700 border-round font-semibold ml-4 p-2 white-space-nowrap" [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">+$401 Today</span>
+          </div>
+        -->
+        <span style="margin-right: 1rem;">Mes:</span>
+        <p-dropdown
+          [options]="listMonths"
+          [(ngModel)]="actualMonth"
+          appendTo="body"
+          optionValue="id"
+          [disabled]="loading()"
+          optionLabel="name"/>
+        <span style="margin-right: 1rem; margin-left: 1rem;">Año:</span>
+        <p-dropdown
+          [options]="listYears"
+          [(ngModel)]="actualYear"
+          [disabled]="loading()"
+          appendTo="body"/>
+      </div>
+      <div class="mx-auto sm:mx-0">
+        <button
+          pButton
+          pRipple
+          type="button"
+          [disabled]="loading()"
+          label="Buscar"
+          pTooltip="Buscar"
+          (click)="searchData()"
+          icon="pi pi-search"
+          class="p-button-rounded p-button-info"
+          iconPos="right">
+        </button>
+      </div>
+    </div>
+    <div class="h-full col-12 xl:col-4">
+      <div class="flex flex-column md:flex-row md:justify-content-between align-items-center mb-2">
+        <h4 class="white-space-nowrap">GASTOS POR MEDIO DE PAGO</h4>
+      </div>
+      <div class="grid">
+        @for(item of [{}, {}, {}, {}, {}, {}]; track item) {
+          <div class="h-full col-12 xl:col-12">
+            <div class="card">
+
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="h-full col-12 xl:col-4">
+      <div class="flex flex-column md:flex-row md:justify-content-between align-items-center mb-2">
+        <h4 class="white-space-nowrap">GASTOS POR CATEGORÍA</h4>
+      </div>
+      <div class="grid">
+        @for(item of [{}, {}, {}, {}, {}, {}]; track item) {
+          <div class="h-full col-12 xl:col-12">
+            <div class="card">
+
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="h-full col-12 xl:col-4 animate__animated animate__fadeIn">
+      <div class="card h-full">
+        <div class="flex flex-column md:flex-row md:justify-content-between align-items-center mb-2">
+          <h4 class="white-space-nowrap">INGRESOS</h4>
+        </div>
+        <div class="flex w-full justify-content-between p-1">
+          <div>
+              <span class="block white-space-nowrap font-semibold">Ingresos Previstos</span>
+              <span class="block font-semibold text-xl mt-2 white-space-nowrap">{{dahboardCashReceipt().expectedValue  | currency:'COP'}}</span>
+          </div>
+          <div class="text-right">
+            <span class="block white-space-nowrap font-semibold">Ingresos Pagos</span>
+            <span class="block font-semibold text-xl mt-2 white-space-nowrap">{{dahboardCashReceipt().totalPaid  | currency:'COP'}}</span>
+        </div>
+        </div>
+        <p-table
+          [value]="dahboardCashReceipt().cashReceipts"
+          [rows]="5"
+          [scrollable]="true" scrollHeight="550px"
+          [loading]="loading()"
+          responsiveLayout="scroll">
+          <ng-template pTemplate="body" let-cashReceipt>
+            <tr>
+              <td>
+                <span  [class]="'white-space-nowrap flex w-3rem h-3rem align-items-center justify-content-center border-round-xl customer-badge status-' + cashReceipt.color.toLowerCase()">
+                    <i class="text-2xl text-color" [ngClass]="'pi pi-money-bill'"></i>
+                </span>
+              </td>
+              <td>
+                <span class="white-space-nowrap block font-semibold">{{cashReceipt.name}}</span>
+                <span class="block text-color-secondary font-sm font-bold">{{(cashReceipt.createdAt | date: 'dd, MMMM yyyy - ha')?.toUpperCase()}}</span>
+              </td>
+              <td>
+                <span class="white-space-nowrap block font-semibold text-lg text-right" [ngClass]="{'text-green-700': cashReceipt.paid, 'text-gray-600': !cashReceipt.paid}">
+                  @if (cashReceipt.paid) {
+                    +{{cashReceipt.amount | currency:'COP'}}
+                  } @else {
+                    {{cashReceipt.amount | currency:'COP'}}
+                  }
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>
