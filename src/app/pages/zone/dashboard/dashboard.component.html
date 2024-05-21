@@ -30,6 +30,19 @@
             </span>
 
             <span class="font-semibold text-2xl" style="margin-left: 0.5rem;">Sobrante: </span>
+            @if( (dahboardCashReceipt().expectedValue - 12240699) >= 0) {
+              <span
+                class="text-gray-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+                [style.backgroundColor]="'rgba(77, 182, 172, 0.1)'">
+                {{dahboardCashReceipt().expectedValue - 12240699  | currency:'COP'}}
+              </span>
+            } @else {
+              <span
+                class="text-gray-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
+                [style.backgroundColor]="'rgba(185, 62, 27, 0.1)'">
+                {{dahboardCashReceipt().totalPaid - 12240699  | currency:'COP'}}
+              </span>
+            }
             @if( (dahboardCashReceipt().totalPaid - 2567117) >= 0) {
               <span
                 class="text-green-700 border-round font-semibold ml-4 p-2 white-space-nowrap"
