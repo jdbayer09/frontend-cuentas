@@ -49,6 +49,7 @@ export class AuthService {
     this._authStatus.set( AuthStatus.notAuthenticated );
     if (navigate) {
       this.router.navigateByUrl('/p/login', {replaceUrl: true});
+      window.location.reload();
     }
   }
 
