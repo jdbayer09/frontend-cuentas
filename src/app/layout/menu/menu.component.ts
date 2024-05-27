@@ -35,6 +35,11 @@ export class MenuComponent implements OnInit {
                     routerLink: ['/z/cash-receipts']
                   },
                   {
+                    label: 'Gastos',
+                    icon: 'pi pi-fw pi-euro',
+                    routerLink: ['/z/costs']
+                  },
+                  {
                       label: 'Categorías',
                       icon: 'pi pi-fw pi-book',
                       routerLink: ['/z/categories']

@@ -32,6 +32,15 @@ export class PaymentMethodService {
       );
   }
 
+
+  listActivePaymentMethods(): Observable<BasePaymentMethod[]> {
+    const url  = `${ this.baseUrl }/list-active`;
+    return this.http.get<PaymentMethod[]>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
   disablePaymentMethod(paymentMethod: PaymentMethod): Observable<MessageResponse<number>> {
     const url  = `${ this.baseUrl }/delete/${paymentMethod.id}`;
     return this.http.delete<MessageResponse<number>>( url, {headers: this.httpHeaders()} )

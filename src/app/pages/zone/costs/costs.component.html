@@ -1,6 +1,7 @@
 <div class="card">
   <p-table
-    [value]="listCashReceipt()"
+    #dt1
+    [value]="listCosts()"
     dataKey="id"
     [rows]="loading() ? 7 : 8"
     [loading]="loading()"
@@ -14,10 +15,10 @@
           <div class="field col-12 md:col-2">
             <button
               pButton
-              label="Nuevo Ingreso"
+              label="Nuevo Gasto"
               class="p-button-outlined p-button-success mb-2"
-              icon="pi pi-dollar"
-              (click)="openModalCashReceipt('create')">
+              icon="pi pi-euro"
+              (click)="openModalCost('create')">
             </button>
           </div>
           <div class="field col-12 md:col-3">
@@ -53,7 +54,7 @@
               icon="pi pi-search"
               pTooltip="Buscar"
               tooltipPosition="bottom"
-              (click)="loadListCashReceipt()">
+              (click)="loadListCosts(dt1)">
             </button>
           </div>
         </div>
@@ -67,15 +68,76 @@
             <p-sortIcon field="name" />
           </div>
         </th>
-        <th style="min-width: 8rem">
-          <div class="flex justify-content-between align-items-center" class="text-center">
-            Color
-          </div>
-        </th>
         <th style="min-width: 8rem" pSortableColumn="amount">
           <div class="flex justify-content-between align-items-center" class="text-center">
             Valor
             <p-sortIcon field="amount" />
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Categoría
+            <p-columnFilter
+              field="category"
+              matchMode="in"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false">
+              <ng-template pTemplate="header">
+                <div class="px-3 pt-3 pb-0">
+                    <span class="font-bold">Categorias</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [options]="listCategory()"
+                  placeholder="Categorias"
+                  [ngModel]="value"
+                  (onChange)="filter($event.value);"
+                  optionLabel="name">
+                  <ng-template let-category pTemplate="item">
+                    <span [class]="'customer-badge status-' + category.color.toLowerCase()" style="margin-right: 10rem;">
+                      <i [class]="'pi ' + category.icon" style="font-size: 1rem"></i>
+                      {{category.name}}
+                    </span>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Método de Pago
+            <p-columnFilter
+              field="paymentMethod"
+              matchMode="in"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false">
+              <ng-template pTemplate="header">
+                <div class="px-3 pt-3 pb-0">
+                    <span class="font-bold">Métodos de Pago</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [options]="listPaymentMethod()"
+                  placeholder="Métodos de Pago"
+                  [ngModel]="value"
+                  (onChange)="filter($event.value);"
+                  optionLabel="name">
+                  <ng-template let-paymentMethod pTemplate="item">
+                    <span [class]="'customer-badge status-' + paymentMethod.color.toLowerCase()" style="margin-right: 10rem;">
+                      <i [class]="'pi ' + paymentMethod.icon" style="font-size: 1rem"></i>
+                      {{paymentMethod.name}}
+                    </span>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </div>
         </th>
         <th style="min-width: 10rem">
@@ -101,28 +163,37 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-cashReceipt>
+    <ng-template pTemplate="body" let-cost>
       <tr>
         <td class="text-center">
-          {{cashReceipt.name}}
+          {{cost.name}}
         </td>
         <td class="text-center">
-          <span [class]="'customer-badge status-' + cashReceipt.color.toLowerCase()">COLOR</span>
+          {{cost.amount | currency:'COP'}}
         </td>
         <td class="text-center">
-          {{cashReceipt.amount | currency:'COP'}}
+          <span [class]="'customer-badge status-' + cost.category.color.toLowerCase()">
+            <i [ngClass]="'pi ' + cost.category.icon" style="margin-right: 0.2rem;"></i>
+            {{cost.category.name}}
+          </span>
         </td>
         <td class="text-center">
-          {{getMonth(cashReceipt.month)}}
+          <span [class]="'customer-badge status-' + cost.paymentMethod.color.toLowerCase()">
+            <i [ngClass]="'pi ' + cost.paymentMethod.icon" style="margin-right: 0.2rem;"></i>
+            {{cost.paymentMethod.name}}
+          </span>
         </td>
         <td class="text-center">
-          {{cashReceipt.year}}
+          {{getMonth(cost.month)}}
         </td>
         <td class="text-center">
-          <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': cashReceipt.paid, 'false-icon pi-times-circle text-pink-500': !cashReceipt.paid}" style="font-size: 1.5rem"></i>
+          {{cost.year}}
+        </td>
+        <td class="text-center">
+          <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': cost.paid, 'false-icon pi-times-circle text-pink-500': !cost.paid}" style="font-size: 1.5rem"></i>
         </td>
         <td style="text-align: center;">
-          @if(!cashReceipt.paid) {
+          @if(!cost.paid) {
             <button
               style="margin-right: 1rem;"
               pTooltip="Editar"
@@ -130,7 +201,7 @@
               pButton
               class="p-button-outlined p-button-warning mb-2"
               icon="pi pi-pencil"
-              (click)="openModalCashReceipt('edit', cashReceipt)">
+              (click)="openModalCost('edit', cost)">
             </button>
             <button
               style="margin-right: 1rem;"
@@ -139,7 +210,7 @@
               pButton
               class="p-button-outlined p-button-success mb-2"
               icon="pi pi-check-circle"
-              (click)="payCashReceipt(cashReceipt)">
+              (click)="payCost(cost)">
             </button>
             <button
               style="margin-right: 1rem;"
@@ -148,7 +219,7 @@
               pButton
               class="p-button-outlined p-button-danger mb-2"
               icon="pi pi-trash"
-              (click)="deleteCashReceipt(cashReceipt)">
+              (click)="deleteCost(cost)">
             </button>
           }
         </td>
@@ -156,12 +227,12 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="8" class="text-center">No hay ingresos registradas</td>
+        <td colspan="8" class="text-center">No hay gastos registradas</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="loadingbody">
       <tr>
-        <td colspan="8" class="text-center">Cargando ingresos, por favor espere</td>
+        <td colspan="8" class="text-center">Cargando gastos, por favor espere</td>
       </tr>
     </ng-template>
     </p-table>

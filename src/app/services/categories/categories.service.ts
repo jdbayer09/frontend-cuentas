@@ -30,6 +30,13 @@ export class CategoriesService {
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
+  listActiveCategories(): Observable<BaseCategory[]> {
+    const url  = `${ this.baseUrl }/list-active`;
+    return this.http.get<Category[]>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
 
   disableCategory(category: Category): Observable<MessageResponse<number>> {
     const url  = `${ this.baseUrl }/delete/${category.id}`;

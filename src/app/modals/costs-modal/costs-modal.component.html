@@ -1,8 +1,8 @@
-@if (formCashReceipt) {
-  <form [formGroup]="formCashReceipt" (ngSubmit)="saveAction()">
+@if (formCost) {
+  <form [formGroup]="formCost" (ngSubmit)="saveAction()">
     <div class="p-fluid">
       <div class="formgrid grid">
-          <div class="field col-12 md:col-12">
+          <div class="field col-12 md:col-6">
               <label>
                   Nombre
                   <span class="required">*</span>
@@ -21,27 +21,61 @@
               currency="COP"
               locale="es-CO" />
           </div>
-
           <div class="field col-12 md:col-6">
             <label>
-              Color
+              Categoría
               <span class="required">*</span>
             </label>
             <p-dropdown
-              formControlName="color"
-              [options]="listColors"
-              placeholder="Seleccione Color"
+              formControlName="categoryId"
+              [options]="listCategory()"
+              placeholder="Seleccione Categoría"
               appendTo="body"
-              optionValue="value"
+              optionValue="id"
+              optionLabel="name"
               [showClear]="true">
-              <ng-template pTemplate="selectedItem" let-selectedColor>
-                <span [class]="'customer-badge status-' + selectedColor.value.toLowerCase()">{{selectedColor.name}}</span>
+              <ng-template pTemplate="selectedItem" let-selectedCategory>
+                <span [class]="'customer-badge status-' + selectedCategory.color.toLowerCase()">
+                  <i [class]="'pi ' + selectedCategory.icon" style="font-size: 1rem"></i>
+                  {{selectedCategory.name}}
+                </span>
               </ng-template>
-              <ng-template let-color pTemplate="item">
-                <span [class]="'customer-badge status-' + color.value.toLowerCase()">{{color.name}}</span>
+              <ng-template let-category pTemplate="item">
+                <span [class]="'customer-badge status-' + category.color.toLowerCase()">
+                  <i [class]="'pi ' + category.icon" style="font-size: 1rem"></i>
+                  {{category.name}}
+                </span>
               </ng-template>
             </p-dropdown>
           </div>
+          <div class="field col-12 md:col-6">
+            <label>
+              Método de Pago
+              <span class="required">*</span>
+            </label>
+            <p-dropdown
+              formControlName="paymentMethodId"
+              [options]="listPaymentMethod()"
+              placeholder="Seleccione Método de Pago"
+              appendTo="body"
+              optionValue="id"
+              optionLabel="name"
+              [showClear]="true">
+              <ng-template pTemplate="selectedItem" let-selectedPaymentMethod>
+                <span [class]="'customer-badge status-' + selectedPaymentMethod.color.toLowerCase()">
+                  <i [class]="'pi ' + selectedPaymentMethod.icon" style="font-size: 1rem"></i>
+                  {{selectedPaymentMethod.name}}
+                </span>
+              </ng-template>
+              <ng-template let-paymentMethod pTemplate="item">
+                <span [class]="'customer-badge status-' + paymentMethod.color.toLowerCase()">
+                  <i [class]="'pi ' + paymentMethod.icon" style="font-size: 1rem"></i>
+                  {{paymentMethod.name}}
+                </span>
+              </ng-template>
+            </p-dropdown>
+          </div>
+
           <div class="field col-12 md:col-6">
             <label>
               Mes
@@ -123,10 +157,10 @@
           type="submit"
           label="Guardar"
           icon="pi pi-save"
-          [disabled]="this.formCashReceipt.invalid"
+          [disabled]="this.formCost.invalid"
           class="p-button-sm p-button-success">
       </button>
   </div>
-  </form>
+</form>
 
 }

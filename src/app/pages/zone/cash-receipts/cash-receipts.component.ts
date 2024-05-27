@@ -3,7 +3,6 @@ import { CashReceiptService } from '../../../services/cashReceipt/cash-receipt.s
 import { UtilService } from '../../../services/util/util.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CashReceipt } from '../../../interfaces/cashReceipts';
-import { Table } from 'primeng/table';
 import { CashReceiptModalComponent } from '../../../modals/cash-receipt-modal/cash-receipt-modal.component';
 import { MessageResponse } from '../../../interfaces/base/messageRespones.interface';
 import { Observable } from 'rxjs';
@@ -39,10 +38,6 @@ export class CashReceiptsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadListCashReceipt();
-  }
-
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
   loadListCashReceipt() {

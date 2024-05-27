@@ -36,12 +36,20 @@ const routes: Routes = [
         loadChildren: () => import('./cash-receipts/cash-receipts.module').then(m => m.CashReceiptsModule)
       },
       {
+        path: 'costs',
+        data: {
+          breadcrumb: 'Gastos'
+        },
+        loadChildren: () => import('./costs/costs.module').then(m => m.CostsModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
   },
+
 
 
 
