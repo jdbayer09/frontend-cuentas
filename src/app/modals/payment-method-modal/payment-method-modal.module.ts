@@ -7,6 +7,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PaymentMethodModalComponent } from './payment-method-modal.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PaymentMethodModalComponent } from './payment-method-modal.component';
     InputTextareaModule,
     DropdownModule,
     ButtonModule,
-    ProgressBarModule
+    ProgressBarModule,
+    InputNumberModule
   ],
   exports: [
     PaymentMethodModalComponent

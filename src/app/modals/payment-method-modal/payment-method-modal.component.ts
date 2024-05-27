@@ -82,6 +82,14 @@ export class PaymentMethodModalComponent {
           Validators.maxLength(60)
         ]
       ],
+      paymentDate: [
+        this.paymentMethod()?.paymentDate ?? 15,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(31)
+        ]
+      ],
       description: [
         this.paymentMethod()?.description ?? null,
         []
