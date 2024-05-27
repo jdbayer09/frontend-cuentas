@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, ViewChildren, computed, inject, signal } from '@angular/core';
 import { CostsService } from '../../../services/costs/costs.service';
 import { UtilService } from '../../../services/util/util.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,6 +10,9 @@ import { CategoriesService } from '../../../services/categories/categories.servi
 import { Observable } from 'rxjs';
 import { MessageResponse } from '../../../interfaces/base/messageRespones.interface';
 import { CostsModalComponent } from '../../../modals/costs-modal/costs-modal.component';
+import { PrimeNGConfig } from 'primeng/api';
+import { TestBed } from '@angular/core/testing';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-costs',
@@ -44,7 +47,7 @@ export class CostsComponent implements OnInit {
   listMonths = this.utilSV.listMonths;
   listYears = this.utilSV.listYears;
 
-  constructor() {
+  constructor(private config: PrimeNGConfig) {
     this.paymentMethodSV.listActivePaymentMethods().subscribe(resp => {
       this.listPaymentMethod = computed<BasePaymentMethod[]>(() => resp);
     });
@@ -52,14 +55,22 @@ export class CostsComponent implements OnInit {
     this.categorySV.listActiveCategories().subscribe(resp => {
       this.listCategory = computed<BaseCategory[]>(() => resp);
     });
+
+    this.config.setTranslation({
+      clear: 'Limpiar',
+      apply: 'Aplicar'
+    });
   }
 
   ngOnInit(): void {
     this.loadListCosts();
   }
 
-  loadListCosts() {
+  loadListCosts(table?: Table) {
     this._loading.set(true);
+    if (table) {
+      table.clear();
+    }
     setTimeout(() => {
       this.costsSV.listAllCosts(this.actualYear, this.actualMonth).subscribe({
         next: resp => {

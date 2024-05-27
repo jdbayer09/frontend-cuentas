@@ -1,5 +1,6 @@
 <div class="card">
   <p-table
+    #dt1
     [value]="listCosts()"
     dataKey="id"
     [rows]="loading() ? 7 : 8"
@@ -53,7 +54,7 @@
               icon="pi pi-search"
               pTooltip="Buscar"
               tooltipPosition="bottom"
-              (click)="loadListCosts()">
+              (click)="loadListCosts(dt1)">
             </button>
           </div>
         </div>
@@ -76,11 +77,67 @@
         <th style="min-width: 12rem">
           <div class="flex justify-content-between align-items-center" class="text-center">
             Categoría
+            <p-columnFilter
+              field="category"
+              matchMode="in"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false">
+              <ng-template pTemplate="header">
+                <div class="px-3 pt-3 pb-0">
+                    <span class="font-bold">Categorias</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [options]="listCategory()"
+                  placeholder="Categorias"
+                  [ngModel]="value"
+                  (onChange)="filter($event.value);"
+                  optionLabel="name">
+                  <ng-template let-category pTemplate="item">
+                    <span [class]="'customer-badge status-' + category.color.toLowerCase()" style="margin-right: 10rem;">
+                      <i [class]="'pi ' + category.icon" style="font-size: 1rem"></i>
+                      {{category.name}}
+                    </span>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </div>
         </th>
         <th style="min-width: 12rem">
           <div class="flex justify-content-between align-items-center" class="text-center">
             Método de Pago
+            <p-columnFilter
+              field="paymentMethod"
+              matchMode="in"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false">
+              <ng-template pTemplate="header">
+                <div class="px-3 pt-3 pb-0">
+                    <span class="font-bold">Métodos de Pago</span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [options]="listPaymentMethod()"
+                  placeholder="Métodos de Pago"
+                  [ngModel]="value"
+                  (onChange)="filter($event.value);"
+                  optionLabel="name">
+                  <ng-template let-paymentMethod pTemplate="item">
+                    <span [class]="'customer-badge status-' + paymentMethod.color.toLowerCase()" style="margin-right: 10rem;">
+                      <i [class]="'pi ' + paymentMethod.icon" style="font-size: 1rem"></i>
+                      {{paymentMethod.name}}
+                    </span>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </div>
         </th>
         <th style="min-width: 10rem">
