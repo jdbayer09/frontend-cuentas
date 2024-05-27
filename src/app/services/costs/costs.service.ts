@@ -40,4 +40,28 @@ export class CostsService {
         catchError( err => throwError( () => err.error.errorMessage ))
       );
   }
+
+  payCost(cost: Cost): Observable<MessageResponse<Cost>> {
+    const url  = `${ this.baseUrl }/pay/${cost.id}`;
+    return this.http.put<MessageResponse<Cost>>( url, {}, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  deleteCost(cost: Cost): Observable<MessageResponse<Cost>> {
+    const url  = `${ this.baseUrl }/delete/${cost.id}`;
+    return this.http.delete<MessageResponse<Cost>>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  listAllCosts(year: number, month: number): Observable<Cost[]> {
+    const url  = `${ this.baseUrl }/list-all?month=${month}&year=${year}`;
+    return this.http.get<Cost[]>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
 }

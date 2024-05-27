@@ -21,7 +21,6 @@
               currency="COP"
               locale="es-CO" />
           </div>
-
           <div class="field col-12 md:col-6">
             <label>
               Categoría
@@ -35,9 +34,20 @@
               optionValue="id"
               optionLabel="name"
               [showClear]="true">
+              <ng-template pTemplate="selectedItem" let-selectedCategory>
+                <span [class]="'customer-badge status-' + selectedCategory.color.toLowerCase()">
+                  <i [class]="'pi ' + selectedCategory.icon" style="font-size: 1rem"></i>
+                  {{selectedCategory.name}}
+                </span>
+              </ng-template>
+              <ng-template let-category pTemplate="item">
+                <span [class]="'customer-badge status-' + category.color.toLowerCase()">
+                  <i [class]="'pi ' + category.icon" style="font-size: 1rem"></i>
+                  {{category.name}}
+                </span>
+              </ng-template>
             </p-dropdown>
           </div>
-
           <div class="field col-12 md:col-6">
             <label>
               Método de Pago
@@ -51,6 +61,18 @@
               optionValue="id"
               optionLabel="name"
               [showClear]="true">
+              <ng-template pTemplate="selectedItem" let-selectedPaymentMethod>
+                <span [class]="'customer-badge status-' + selectedPaymentMethod.color.toLowerCase()">
+                  <i [class]="'pi ' + selectedPaymentMethod.icon" style="font-size: 1rem"></i>
+                  {{selectedPaymentMethod.name}}
+                </span>
+              </ng-template>
+              <ng-template let-paymentMethod pTemplate="item">
+                <span [class]="'customer-badge status-' + paymentMethod.color.toLowerCase()">
+                  <i [class]="'pi ' + paymentMethod.icon" style="font-size: 1rem"></i>
+                  {{paymentMethod.name}}
+                </span>
+              </ng-template>
             </p-dropdown>
           </div>
 

@@ -1,1 +1,182 @@
-<p>costs works!</p>
+<div class="card">
+  <p-table
+    [value]="listCosts()"
+    dataKey="id"
+    [rows]="loading() ? 7 : 8"
+    [loading]="loading()"
+    [rowHover]="true"
+    [paginator]="true"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+      <div class="p-fluid">
+        <div class="formgrid grid">
+          <div class="field col-12 md:col-2">
+            <button
+              pButton
+              label="Nuevo Gasto"
+              class="p-button-outlined p-button-success mb-2"
+              icon="pi pi-euro"
+              (click)="openModalCost('create')">
+            </button>
+          </div>
+          <div class="field col-12 md:col-3">
+
+          </div>
+          <div class="field col-12 md:col-1" style="text-align: end; margin-top: 0.7rem;">
+            Mes:
+          </div>
+          <div class="field col-12 md:col-2" style="text-align: end;">
+            <p-dropdown
+              [options]="listMonths"
+              [(ngModel)]="actualMonth"
+              appendTo="body"
+              class="w-full"
+              optionValue="id"
+              optionLabel="name"/>
+          </div>
+          <div class="field col-12 md:col-1" style="text-align: end; margin-top: 0.7rem;">
+            Año:
+          </div>
+          <div class="field col-12 md:col-2" style="text-align: end;">
+            <p-dropdown
+              [options]="listYears"
+              class="w-full"
+              [(ngModel)]="actualYear"
+              appendTo="body"/>
+          </div>
+          <div class="field col-12 md:col-1" style="text-align: end;">
+            <button
+              pButton
+              [label]="'Buscar'"
+              class="p-button-outlined p-button-info mb-2"
+              icon="pi pi-search"
+              pTooltip="Buscar"
+              tooltipPosition="bottom"
+              (click)="loadListCosts()">
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="min-width: 15rem" pSortableColumn="name">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Nombre
+            <p-sortIcon field="name" />
+          </div>
+        </th>
+        <th style="min-width: 8rem" pSortableColumn="amount">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Valor
+            <p-sortIcon field="amount" />
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Categoría
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Método de Pago
+          </div>
+        </th>
+        <th style="min-width: 10rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Mes
+          </div>
+        </th>
+        <th style="min-width: 7rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Año
+          </div>
+        </th>
+        <th style="min-width: 6rem" pSortableColumn="paid">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Pagado
+            <p-sortIcon field="paid" />
+          </div>
+        </th>
+        <th style="min-width: 10rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Acciones
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cost>
+      <tr>
+        <td class="text-center">
+          {{cost.name}}
+        </td>
+        <td class="text-center">
+          {{cost.amount | currency:'COP'}}
+        </td>
+        <td class="text-center">
+          <span [class]="'customer-badge status-' + cost.category.color.toLowerCase()">
+            <i [ngClass]="'pi ' + cost.category.icon" style="margin-right: 0.2rem;"></i>
+            {{cost.category.name}}
+          </span>
+        </td>
+        <td class="text-center">
+          <span [class]="'customer-badge status-' + cost.paymentMethod.color.toLowerCase()">
+            <i [ngClass]="'pi ' + cost.paymentMethod.icon" style="margin-right: 0.2rem;"></i>
+            {{cost.paymentMethod.name}}
+          </span>
+        </td>
+        <td class="text-center">
+          {{getMonth(cost.month)}}
+        </td>
+        <td class="text-center">
+          {{cost.year}}
+        </td>
+        <td class="text-center">
+          <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': cost.paid, 'false-icon pi-times-circle text-pink-500': !cost.paid}" style="font-size: 1.5rem"></i>
+        </td>
+        <td style="text-align: center;">
+          @if(!cost.paid) {
+            <button
+              style="margin-right: 1rem;"
+              pTooltip="Editar"
+              tooltipPosition="left"
+              pButton
+              class="p-button-outlined p-button-warning mb-2"
+              icon="pi pi-pencil"
+              (click)="openModalCost('edit', cost)">
+            </button>
+            <button
+              style="margin-right: 1rem;"
+              pTooltip="Marcar como Pago"
+              tooltipPosition="bottom"
+              pButton
+              class="p-button-outlined p-button-success mb-2"
+              icon="pi pi-check-circle"
+              (click)="payCost(cost)">
+            </button>
+            <button
+              style="margin-right: 1rem;"
+              pTooltip="Eliminar"
+              tooltipPosition="right"
+              pButton
+              class="p-button-outlined p-button-danger mb-2"
+              icon="pi pi-trash"
+              (click)="deleteCost(cost)">
+            </button>
+          }
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">No hay gastos registradas</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="8" class="text-center">Cargando gastos, por favor espere</td>
+      </tr>
+    </ng-template>
+    </p-table>
+</div>
