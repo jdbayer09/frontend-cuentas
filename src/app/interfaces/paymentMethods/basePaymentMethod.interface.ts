@@ -3,4 +3,5 @@ export interface BasePaymentMethod {
   name:  string;
   color: string;
   icon:  string;
+  paymentDate: number;
 }

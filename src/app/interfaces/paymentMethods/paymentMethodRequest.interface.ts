@@ -3,4 +3,5 @@ export interface PaymentMethodRequest {
   description: string;
   icon:        string;
   color:       string;
+  paymentDate: number;
 }

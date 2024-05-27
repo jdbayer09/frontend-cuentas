@@ -6,4 +6,5 @@ export interface PaymentMethod {
   description: string;
   active:      boolean;
   createdAt:   Date;
+  paymentDate: number;
 }

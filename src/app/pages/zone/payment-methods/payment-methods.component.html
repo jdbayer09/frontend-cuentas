@@ -50,6 +50,11 @@
             Descripción
           </div>
         </th>
+        <th style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center" class="text-center">
+            Fecha de Pago
+          </div>
+        </th>
         <th style="min-width: 12rem">
           <div class="flex justify-content-between align-items-center" class="text-center">
             Fecha de Creación
@@ -80,6 +85,9 @@
         </td>
         <td class="text-center">
           {{paymentMethod.description}}
+        </td>
+        <td class="text-center">
+          {{paymentMethod.paymentDate}}
         </td>
         <td class="text-center">
           {{(paymentMethod.createdAt | date: 'dd, MMMM yyyy - ha')?.toUpperCase()}}
