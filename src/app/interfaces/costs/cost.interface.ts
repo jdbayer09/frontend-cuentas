@@ -1,7 +1,7 @@
 import { Category } from "../categories";
 import { PaymentMethod } from '../paymentMethods/paymentMethod.interface';
 
-export interface CashReceipt {
+export interface Cost {
   id:     number;
   name:   string;
   amount: number;

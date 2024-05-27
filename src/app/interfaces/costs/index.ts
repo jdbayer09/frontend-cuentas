@@ -1,1 +1,2 @@
-import { CostRequest } from './costRequest.interface';
+export { CostRequest } from './costRequest.interface';
+export { Cost } from './cost.interface';
