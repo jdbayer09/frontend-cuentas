@@ -159,7 +159,7 @@ export class CostsModalComponent {
         [
           Validators.required,
           Validators.min(0),
-          Validators.max(12)
+          Validators.max(100)
         ]
       ]
     });
