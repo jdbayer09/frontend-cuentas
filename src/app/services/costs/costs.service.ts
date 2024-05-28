@@ -2,7 +2,7 @@ import { Injectable, Signal, computed, inject } from '@angular/core';
 import { UtilService } from '../util/util.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Cost, CostRequest } from '../../interfaces/costs';
+import { Cost, CostRequest, DashboardCost } from '../../interfaces/costs';
 import { MessageResponse } from '../../interfaces/base/messageRespones.interface';
 import { Observable, catchError, throwError } from 'rxjs';
 
@@ -60,6 +60,14 @@ export class CostsService {
   listAllCosts(year: number, month: number): Observable<Cost[]> {
     const url  = `${ this.baseUrl }/list-all?month=${month}&year=${year}`;
     return this.http.get<Cost[]>( url, {headers: this.httpHeaders()} )
+      .pipe(
+        catchError( err => throwError( () => err.error.errorMessage ))
+      );
+  }
+
+  getDashboardCosts(year: number, month: number): Observable<DashboardCost> {
+    const url  = `${ this.baseUrl }/dashboard?month=${month}&year=${year}`;
+    return this.http.get<DashboardCost>( url, {headers: this.httpHeaders()} )
       .pipe(
         catchError( err => throwError( () => err.error.errorMessage ))
       );
