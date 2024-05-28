@@ -20,7 +20,7 @@
               (click)="openModalCashReceipt('create')">
             </button>
           </div>
-          <div class="field col-12 md:col-3">
+          <div class="field col-12 md:col-4">
 
           </div>
           <div class="field col-12 md:col-1" style="text-align: end; margin-top: 0.7rem;">
@@ -33,6 +33,7 @@
               appendTo="body"
               class="w-full"
               optionValue="id"
+              (onChange)="loadListCashReceipt()"
               optionLabel="name"/>
           </div>
           <div class="field col-12 md:col-1" style="text-align: end; margin-top: 0.7rem;">
@@ -43,18 +44,8 @@
               [options]="listYears"
               class="w-full"
               [(ngModel)]="actualYear"
+              (onChange)="loadListCashReceipt()"
               appendTo="body"/>
-          </div>
-          <div class="field col-12 md:col-1" style="text-align: end;">
-            <button
-              pButton
-              [label]="'Buscar'"
-              class="p-button-outlined p-button-info mb-2"
-              icon="pi pi-search"
-              pTooltip="Buscar"
-              tooltipPosition="bottom"
-              (click)="loadListCashReceipt()">
-            </button>
           </div>
         </div>
       </div>

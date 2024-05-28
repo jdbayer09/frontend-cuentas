@@ -66,11 +66,8 @@ export class CostsComponent implements OnInit {
     this.loadListCosts();
   }
 
-  loadListCosts(table?: Table) {
+  loadListCosts() {
     this._loading.set(true);
-    if (table) {
-      table.clear();
-    }
     setTimeout(() => {
       this.costsSV.listAllCosts(this.actualYear, this.actualMonth).subscribe({
         next: resp => {
